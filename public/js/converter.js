@@ -43,6 +43,11 @@ converter.generateTransactionData = function (amount, key) {
 };
 
 converter.verifyKey = function (signature, key) {
+
+    if (!key || !signature) {
+        return false;
+    }
+
     return nacl.sign.detached.verify(new Uint8Array(), signature.hexToByte(), key.hexToByte());
 };
 
@@ -85,12 +90,15 @@ converter.validateForm = function (filed) {
             } else if (!converter.verifyKey(signature, key)) {
                 signatureInput.removeClass('is-valid').addClass('is-invalid');
                 valid = false;
-                if (key) {
+                if (key && (key != converter.tmp.key || signature != converter.tmp.signature || typeof filed === 'undefined')) {
                     $('#keyWarningModal').modal();
                 }
             } else {
                 signatureInput.removeClass('is-invalid').addClass('is-valid');
             }
+
+            converter.tmp.key = key;
+            converter.tmp.signature = signature;
         }
     }
 
@@ -107,6 +115,8 @@ $(document).ready(function ($) {
     const keyInput = $('#keyInput');
     const signatureInput = $('#signatureInput');
     const doubleCheckInput = $('#doubleCheckInput');
+
+    converter.tmp = {key: '', signature: ''};
 
     $('#converterForm').submit(function (event) {
 
@@ -130,34 +140,17 @@ $(document).ready(function ($) {
         }
     });
 
-    amountInput.keyup(function (event) {
+    amountInput.bind("keyup change", function (event) {
         converter.validateForm('amount');
     });
 
-    amountInput.change(function (event) {
-        converter.validateForm('amount');
-    });
-
-    keyInput.keyup(function (event) {
-        converter.validateForm('key');
-        if (signatureInput.val()) {
+    keyInput.bind("keyup change", function (event) {
+        if (converter.validateForm('key') && signatureInput.val()) {
             converter.validateForm('signature');
         }
     });
 
-    keyInput.change(function (event) {
-        converter.validateForm('key');
-        if (signatureInput.val()) {
-            converter.validateForm('signature');
-        }
-    });
-
-    signatureInput.keyup(function (event) {
-        converter.validateForm('key');
-        converter.validateForm('signature');
-    });
-
-    signatureInput.change(function (event) {
+    signatureInput.bind("keyup change", function (event) {
         converter.validateForm('key');
         converter.validateForm('signature');
     });

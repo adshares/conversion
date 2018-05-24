@@ -93,7 +93,7 @@
                     <div class="border border-secondary p-1 my-3">
                         <code class="contractAddress">---</code>
                     </div>
-                    with transaction data:
+                    With transaction data:
                     <div class="border border-secondary p-1 my-3">
                         <code id="transactionData">---</code>
                     </div>
