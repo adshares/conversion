@@ -12,7 +12,16 @@
 */
 
 $app->get('/', function () use ($app) {
-    return view('converter');
+
+    return view('converter', [
+        'settings' => [
+            'contractAddress' => env('CONVERTER_CONTRACT_ADDRESS'),
+            'transferMethod' => env('CONVERTER_TRANSFER_METHOD'),
+            'burnAddress' => env('CONVERTER_BURN_ADDRESS'),
+            'minTokenAmount' => (int)env('CONVERTER_MIN_TOKEN_AMOUNT'),
+            'minMasterNodeTokenAmount' => (int)env('CONVERTER_MIN_MASTER_NODE_TOKEN_AMOUNT')
+        ]
+    ]);
 });
 
 $app->get('/status', function () use ($app) {

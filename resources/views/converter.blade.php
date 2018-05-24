@@ -10,13 +10,15 @@
         </div>
         <div class="row">
             <div class="col">
-                <form class="needs-validation" novalidate id="converterForm">
+                <form novalidate id="converterForm">
                     <div class="content">
                         <div class="form-group">
                             <label for="amountInput">Amount</label>
                             <div class="input-group mb-3">
-                                <input type="number" step="any" min="0" class="form-control" id="amountInput"
-                                       placeholder="Enter amount" required>
+                                <input type="number" step="1" min="{{ $settings['minTokenAmount'] }}"
+                                       class="form-control" id="amountInput"
+                                       placeholder="Enter amount" required
+                                       value="{{ $settings['minMasterNodeTokenAmount'] }}">
                                 <div class="input-group-append">
                                     <span class="input-group-text">ADST</span>
                                 </div>
@@ -30,7 +32,7 @@
                         </div>
                         <div class="form-group">
                             <label for="keyInput">Public key</label>
-                            <textarea class="form-control" id="keyInput" placeholder="Enter public key" rows="5"
+                            <textarea class="form-control" id="keyInput" placeholder="Enter public key" rows="3"
                                       required></textarea>
                             <div class="valid-feedback">
                                 Looks good!
@@ -39,14 +41,21 @@
                                 Please provide a valid public key.
                             </div>
                         </div>
-                        <!--                        <div class="form-group form-check">-->
-                        <!--                            <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
-                        <!--                            <label class="form-check-label" for="exampleCheck1">Check my key</label>-->
-                        <!--                        </div>-->
-                        <!--                        <div class="form-group">-->
-                        <!--                            <label for="exampleInputPassword1">Empty message signature</label>-->
-                        <!--                            <textarea class="form-control" id="exampleInputPassword1" placeholder="Enter signature" rows="5"></textarea>-->
-                        <!--                        </div>-->
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="doubleCheckInput" checked>
+                            <label class="form-check-label" for="doubleCheckInput">Double key verification</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="signatureInput">Empty message signature</label>
+                            <textarea class="form-control" id="signatureInput" placeholder="Enter signature"
+                                      rows="5"></textarea>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please provide a valid signature.
+                            </div>
+                        </div>
                     </div>
                     <div class="content text-center">
                         <button disabled type="submit" class="btn btn-primary" id="generateButton">Generate</button>
@@ -57,7 +66,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="convertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="convertModal" tabindex="-1" role="dialog"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -80,9 +89,9 @@
                         </p>
                     </div>
 
-                    Send <code><span id="transactionAmount">---</span> ADST</code> to:
+                    Send <code>0 ETH</code> to:
                     <div class="border border-secondary p-1 my-3">
-                        <code class="burnAddress">---</code>
+                        <code class="contractAddress">---</code>
                     </div>
                     with transaction data:
                     <div class="border border-secondary p-1 my-3">
@@ -99,8 +108,38 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="keyWarningModal" tabindex="-1" role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+
+            <div class="modal-body">
+                <div class="alert alert-danger" role="alert">
+                    <h4 class="alert-heading text-center">Signature verification faild</h4>
+                    <p>
+                        Signature of an empty string and public key don't match.
+                    </p>
+                    <hr>
+                    <p class="mb-0">
+                        Make sure you generate correct keys. Retrieve founds with incorrect key will be impossible.
+                    </p>
+                    <hr>
+                    <p class="mb-0 text-right">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 @endsection
 
 @section('scripts')
+    <script>
+        const converter = {
+            settings: <?php echo json_encode($settings); ?>
+        };
+    </script>
+    <script src="/js/nacl-fast.min.js"></script>
     <script src="/js/converter.js"></script>
 @endsection
