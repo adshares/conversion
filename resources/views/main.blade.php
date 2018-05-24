@@ -16,8 +16,21 @@
     <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
     <style>
+
+        @font-face {
+            font-family: 'AvenirNext';
+            font-weight: normal;
+            src: url(/fonts/AvenirNext-Regular.otf) format('opentype');
+        }
+
+        @font-face {
+            font-family: 'AvenirNext';
+            font-weight: bold;
+            src: url(/fonts/AvenirNext-Bold.otf) format('opentype');
+        }
+
         body {
-            font-family: "AvenirNext-Regular", sans-serif;
+            font-family: "AvenirNext", apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
             background-color: #f8f9fc;
             min-height: 100vh;
         }
@@ -48,6 +61,20 @@
 
         h1, h2, h3 {
             color: #121f3e;
+            font-weight: bold;
+        }
+
+        .btn {
+            border-radius: 2px;
+        }
+
+        .btn-primary {
+            background-color: #55a8fd;
+            border-color: #55a8fd;
+        }
+
+        .modal .alert {
+            margin-bottom: 0;
         }
 
         .footer {
@@ -72,6 +99,7 @@
             text-decoration: none;
             font-size: 1rem;
             font-family: "AvenirNext-Demi", sans-serif;
+            font-weight: bold;
         }
 
     </style>

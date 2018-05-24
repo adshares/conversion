@@ -1,5 +1,5 @@
 @extends('main')
-@section('title', 'ADST Converter Tool')
+@section('title', 'ADST ⇝ ADS')
 @section('content')
 
     <div class="container converter">
@@ -111,24 +111,25 @@
     <div class="modal fade" id="keyWarningModal" tabindex="-1" role="dialog"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-
-            <div class="modal-body">
-                <div class="alert alert-danger" role="alert">
-                    <h4 class="alert-heading text-center">Signature verification faild</h4>
-                    <p>
-                        Signature of an empty string and public key don't match.
-                    </p>
-                    <hr>
-                    <p class="mb-0">
-                        Make sure you generate correct keys. Retrieve founds with incorrect key will be impossible.
-                    </p>
-                    <hr>
-                    <p class="mb-0 text-right">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </p>
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="alert alert-danger" role="alert">
+                        <h4 class="alert-heading text-center">Signature verification faild</h4>
+                        <hr>
+                        <p>
+                            Signature of an empty string doesn't match the public key.
+                        </p>
+                        <p class="mb-0">
+                            Make sure you generate correct keys. Retrieve founds with an incorrect key will be
+                            impossible.
+                        </p>
+                        <hr>
+                        <p class="mb-0 text-right">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </p>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 
