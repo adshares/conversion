@@ -14,6 +14,7 @@
 $app->get('/', function () use ($app) {
 
     return view('converter', [
+        'environment' => $app->environment(),
         'settings' => [
             'contractAddress' => env('CONVERTER_CONTRACT_ADDRESS'),
             'transferMethod' => env('CONVERTER_TRANSFER_METHOD'),
@@ -25,5 +26,5 @@ $app->get('/', function () use ($app) {
 });
 
 $app->get('/status', function () use ($app) {
-    return view('status');
+    return view('status', ['environment' => $app->environment()]);
 });
