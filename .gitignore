@@ -15,3 +15,5 @@ storage/
 Homestead.yaml
 Homestead.json
 
+# CI
+.scannerwork

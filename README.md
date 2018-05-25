@@ -1,3 +1,5 @@
+[![Quality Status](https://sonarcloud.io/api/project_badges/measure?project=adshares-conversion&metric=alert_status)](https://sonarcloud.io/dashboard?id=adshares-conversion)
+
 ## ADS Conversion Tools
 
 ## Installation
