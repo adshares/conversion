@@ -5,15 +5,7 @@
     "autoload": {
         "psr-4": {
             "Adshares\\Ads\\": "app/"
-        },
-        "classmap": [
-            "database/"
-        ]
-    },
-    "autoload-dev": {
-        "classmap": [
-            "tests/"
-        ]
+        }
     },
     "require": {
         "php": ">=7.2",
