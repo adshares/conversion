@@ -37,7 +37,7 @@ class ScanCommand extends Command
         $scanner->setLogger(app('log'));
         $count = $scanner->scan();
 
-        $this->info(sprintf('Processed %d transactions', $count));
+        $this->info(sprintf('Converted %d transactions', $count));
     }
 
     /**
