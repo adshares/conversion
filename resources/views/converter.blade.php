@@ -78,7 +78,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class="alert alert-warning" role="alert" id="masterNodeWarning">
+                    <div class="alert alert-warning mb-3" role="alert" id="masterNodeWarning">
                         <p>
                             To become masternode operators in the ESC network without having to pay a fee you have to
                             destroy (burn) at least <span class="minMasterNodeTokenAmount">20,000</span> ADST.
