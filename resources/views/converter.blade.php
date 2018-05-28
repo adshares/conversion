@@ -13,7 +13,7 @@
                 <form novalidate id="converterForm">
                     <div class="content">
                         <div class="form-group">
-                            <label for="amountInput">Amount</label>
+                            <label for="amountInput">Amount <span class="badge badge-secondary">ADST</span></label>
                             <div class="input-group mb-3">
                                 <input type="number" step="1" min="{{ $settings['minTokenAmount'] }}"
                                        class="form-control" id="amountInput"
@@ -31,7 +31,19 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="keyInput">Public key</label>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="keyInput">Public key <span
+                                                class="badge badge-secondary">PK</span></label>
+                                </div>
+                                <div class="col-sm-6 text-right">
+                                    <a href="https://github.com/adshares/esc/wiki/How-to-generate-esc-keys"
+                                       target="_blank"
+                                       title="How to generate ESC keys?">
+                                        <small>How to generate ESC keys?</small>
+                                    </a>
+                                </div>
+                            </div>
                             <textarea class="form-control" id="keyInput" placeholder="Enter public key" rows="3"
                                       required></textarea>
                             <div class="valid-feedback">
@@ -46,7 +58,8 @@
                             <label class="form-check-label" for="doubleCheckInput">Double key verification</label>
                         </div>
                         <div class="form-group">
-                            <label for="signatureInput">Empty message signature</label>
+                            <label for="signatureInput">Empty string signature <span
+                                        class="badge badge-secondary">SG</span></label>
                             <textarea class="form-control" id="signatureInput" placeholder="Enter signature"
                                       rows="5"></textarea>
                             <div class="valid-feedback">
@@ -117,11 +130,19 @@
                         <h4 class="alert-heading text-center">Signature verification faild</h4>
                         <hr>
                         <p>
-                            Signature of an empty string doesn't match the public key.
+                            Signature of an empty string <span class="badge badge-secondary">SG</span> doesn't match the
+                            public key <span class="badge badge-secondary">PK</span>. Make sure you generate correct
+                            keys.
+                        </p>
+                        <p>
+                            <strong>Retrieve founds with an incorrect key will be impossible.</strong>
                         </p>
                         <p class="mb-0">
-                            Make sure you generate correct keys. Retrieve founds with an incorrect key will be
-                            impossible.
+                            <small>You can find more about keys on <a
+                                        href="https://github.com/adshares/esc/wiki/How-to-generate-esc-keys"
+                                        target="_blank"
+                                        title="How to generate ESC keys?">this page</a>.
+                            </small>
                         </p>
                         <hr>
                         <p class="mb-0 text-right">
