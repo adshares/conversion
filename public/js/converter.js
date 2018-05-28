@@ -48,7 +48,7 @@ converter.verifyKey = function (signature, key) {
         return false;
     }
 
-    return nacl.sign.detached.verify(new Uint8Array(), signature.hexToByte(), key.hexToByte());
+    return nacl.sign.detached.verify(new Uint8Array(), signature.sanitizeHex().hexToByte(), key.sanitizeHex().hexToByte());
 };
 
 converter.validateForm = function (filed) {
