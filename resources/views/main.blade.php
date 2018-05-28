@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>ESC - ADS - @yield('title')</title>
+    <title>ADS - @yield('title')</title>
     <meta name="description" content="ADS Tools">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
           integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="canonical" href="<?=url()?>">
-    <meta property="og:title" content="ESC - ADS Tools">
-    <meta property="og:description" content="ADS Tools">
+    <meta property="og:title" content="ADS Conversion Tools">
+    <meta property="og:description" content="ADS Conversion Tools">
     <meta property="og:url" content="<?=url()?>">
     <meta property="og:image" content="<?=url('images/logo.png')?>">
     <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
