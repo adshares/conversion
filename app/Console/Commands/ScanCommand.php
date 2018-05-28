@@ -2,6 +2,8 @@
 
 namespace Adshares\Ads\Console\Commands;
 
+use Log;
+use Adshares\Ads\Scanner\Scanner;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -28,14 +30,14 @@ class ScanCommand extends Command
      */
     public function fire()
     {
-        $host = $this->input->getOption('host');
-        $port = $this->input->getOption('port');
+        $url = $this->input->getOption('url');
+        $this->info(sprintf('Scanner starting on %s', $url));
 
-        $this->info("Lumen development server started on http://{$host}:{$port}/");
+        $scanner = new Scanner($url);
+        $scanner->setLogger(app('log'));
+        $count = $scanner->scan();
 
-
-
-
+        $this->info(sprintf('Processed %d transactions', $count));
     }
 
     /**
@@ -46,8 +48,7 @@ class ScanCommand extends Command
     protected function getOptions()
     {
         return [
-            ['host', null, InputOption::VALUE_OPTIONAL, 'The ethereum node host address', 'localhost'],
-            ['port', null, InputOption::VALUE_OPTIONAL, 'The ethereum node port', 8000],
+            ['url', null, InputOption::VALUE_OPTIONAL, 'The ethereum node host URL', 'http://localhost:8545']
         ];
     }
 }
