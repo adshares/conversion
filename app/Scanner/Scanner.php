@@ -271,9 +271,6 @@ class Scanner implements LoggerAwareInterface
         $data = substr($input, strlen($this->transferMethod));
         $data = str_split($data, 64);
 
-        // FIXME remove this mock
-        if (!isset($data[2])) $data[2] = $data[0];
-
         if (3 !== count($data)) {
             $this->logger->debug(sprintf(
                 'Incorrect number of parameters; got %d, should be 3.',
@@ -283,16 +280,15 @@ class Scanner implements LoggerAwareInterface
             return false;
         }
 
-        // FIXME uncomment this
-//        if (self::sanitizeHex($data[0]) !== self::sanitizeHex($this->burnAddress)) {
-//            $this->logger->debug(sprintf(
-//                'Incorrect burn address; got %s, should be %s.',
-//                '0x' . $data[0],
-//                $this->burnAddress
-//            ));
-//
-//            return false;
-//        }
+        if (self::sanitizeHex($data[0]) !== self::sanitizeHex($this->burnAddress)) {
+            $this->logger->debug(sprintf(
+                'Incorrect burn address; got %s, should be %s.',
+                '0x' . $data[0],
+                $this->burnAddress
+            ));
+
+            return false;
+        }
 
         $burnAmountData = '0x' . preg_replace('/^0+/', '', $data[1]);
         if (1 > ($burnAmount = (int)hexdec($burnAmountData))) {
@@ -327,14 +323,14 @@ class Scanner implements LoggerAwareInterface
     private function saveTransaction(\stdClass $transaction): bool
     {
 
-//            dump($transaction);
-        dump($transaction->from);
-        dump($transaction->to);
-        dump($transaction->timestamp);
-        dump($transaction->burnAmount);
-        dump($transaction->conversionKey);
-
-//            dump( new \DateTime('@' . $transaction->timestamp));
+////            dump($transaction);
+//        dump($transaction->from);
+//        dump($transaction->to);
+//        dump($transaction->timestamp);
+//        dump($transaction->burnAmount);
+//        dump($transaction->conversionKey);
+//
+////            dump( new \DateTime('@' . $transaction->timestamp));
 
         return true;
     }
