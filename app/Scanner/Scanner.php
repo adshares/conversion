@@ -109,11 +109,12 @@ class Scanner implements LoggerAwareInterface
     }
 
     /**
-     * @return string
+     * @param int $retry
+     * @return string|null
      */
-    private function createFilter(): string
+    private function createFilter(int $retry = 2): ?string
     {
-        $id = 0;
+        $id = null;
 
         $this->web3->eth->newFilter([
             'fromBlock' => $this->startBlock,
@@ -130,18 +131,26 @@ class Scanner implements LoggerAwareInterface
             $id = $result;
         });
 
+        if (null === $id && $retry) {
+            $id = $this->createFilter(--$retry);
+        }
+
         return $id;
     }
 
     /**
-     * @param string $id
+     * @param int $retry
      * @return array
      */
-    private function getLogs(string $id): array
+    private function getLogs(int $retry = 2): array
     {
-        $logs = [];
+        $logs = null;
 
-        $this->web3->eth->getFilterLogs($id, function ($err, $result) use (&$logs) {
+        if (null === ($filter = $this->createFilter())) {
+            return [];
+        }
+
+        $this->web3->eth->getFilterLogs($filter, function ($err, $result) use (&$logs) {
 
             if ($err !== null) {
                 $this->logger->error(sprintf('Fetching logs error: %s', $err->getMessage()));
@@ -152,14 +161,19 @@ class Scanner implements LoggerAwareInterface
             $logs = $result;
         });
 
-        return $logs;
+        if (null === $logs && $retry) {
+            $logs = $this->getLogs(--$retry);
+        }
+
+        return null === $logs ? [] : $logs;
     }
 
     /**
      * @param string $hash
+     * @param int $retry
      * @return \stdClass
      */
-    private function getBlock(string $hash): \stdClass
+    private function getBlock(string $hash, int $retry = 2): ?\stdClass
     {
         if (!isset($this->blockCache[$hash])) {
             $this->web3->eth->getBlockByHash($hash, false, function ($err, $result) {
@@ -172,6 +186,10 @@ class Scanner implements LoggerAwareInterface
 
                 $this->blockCache[$result->hash] = $result;
             });
+
+            if (!isset($this->blockCache[$hash]) && $retry) {
+                $this->blockCache[$hash] = $this->getBlock($hash, --$retry);
+            }
         }
 
         return isset($this->blockCache[$hash]) ? $this->blockCache[$hash] : null;
@@ -194,9 +212,10 @@ class Scanner implements LoggerAwareInterface
 
     /**
      * @param string $hash
+     * @param int $retry
      * @return \stdClass
      */
-    private function getTransaction(string $hash): \stdClass
+    private function getTransaction(string $hash, int $retry = 2): ?\stdClass
     {
         $transaction = null;
 
@@ -210,6 +229,10 @@ class Scanner implements LoggerAwareInterface
 
             $transaction = $result;
         });
+
+        if (null === $transaction && $retry) {
+            $transaction = $this->getTransaction($hash, --$retry);
+        }
 
         return $transaction;
     }
@@ -249,7 +272,7 @@ class Scanner implements LoggerAwareInterface
         $data = str_split($data, 64);
 
         // FIXME remove this mock
-        $data[2] = $data[0];
+        if (!isset($data[2])) $data[2] = $data[0];
 
         if (3 !== count($data)) {
             $this->logger->debug(sprintf(
@@ -261,15 +284,15 @@ class Scanner implements LoggerAwareInterface
         }
 
         // FIXME uncomment this
-        if (self::sanitizeHex($data[0]) !== self::sanitizeHex($this->burnAddress)) {
-            $this->logger->debug(sprintf(
-                'Incorrect burn address; got %s, should be %s.',
-                '0x' . $data[0],
-                $this->burnAddress
-            ));
-
-            return false;
-        }
+//        if (self::sanitizeHex($data[0]) !== self::sanitizeHex($this->burnAddress)) {
+//            $this->logger->debug(sprintf(
+//                'Incorrect burn address; got %s, should be %s.',
+//                '0x' . $data[0],
+//                $this->burnAddress
+//            ));
+//
+//            return false;
+//        }
 
         $burnAmountData = '0x' . preg_replace('/^0+/', '', $data[1]);
         if (1 > ($burnAmount = (int)hexdec($burnAmountData))) {
@@ -303,11 +326,15 @@ class Scanner implements LoggerAwareInterface
      */
     private function saveTransaction(\stdClass $transaction): bool
     {
+
+//            dump($transaction);
         dump($transaction->from);
         dump($transaction->to);
         dump($transaction->timestamp);
         dump($transaction->burnAmount);
         dump($transaction->conversionKey);
+
+//            dump( new \DateTime('@' . $transaction->timestamp));
 
         return true;
     }
@@ -320,10 +347,7 @@ class Scanner implements LoggerAwareInterface
         $eth = $this->web3->eth;
         $this->logger->debug('Scanning...');
 
-        if (0 === ($filter = $this->createFilter())) {
-            return 0;
-        }
-        $logs = $this->getLogs($filter);
+        $logs = $this->getLogs();
         $this->logger->info(sprintf('Found %d logs', count($logs)));
 
         $count = 0;
@@ -346,9 +370,6 @@ class Scanner implements LoggerAwareInterface
                 $this->logger->error(sprintf('Cannot save transaction %s', $log->transactionHash));
                 continue;
             }
-
-//            dump( new \DateTime('@' . $transaction->timestamp));
-//            dump($transaction);
 
             ++$count;
         }
