@@ -128,6 +128,7 @@ $(document).ready(function ($) {
             let amount = parseInt($('#amountInput').val().trim());
             let key = $('#keyInput').val().trim();
 
+            $('.tokenAmount').text(amount.formatMoney(0));
             $('#transactionData').text(converter.generateTransactionData(amount, key));
 
             if (amount < converter.settings.minMasterNodeTokenAmount) {

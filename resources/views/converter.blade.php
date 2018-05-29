@@ -103,14 +103,17 @@
                         </p>
                     </div>
 
-                    Send <code>0 ETH</code> to:
+                    Send <code>0 ETH</code> to ADST contract address:
                     <div class="border border-secondary p-1 my-3">
                         <code class="contractAddress">---</code>
                     </div>
-                    With transaction data:
+
+                    Set transaction data (yours <code><span class="tokenAmount">20,000</span> ADST</code> and public key are encoded in this data):
                     <div class="border border-secondary p-1 my-3">
                         <code id="transactionData">---</code>
                     </div>
+
+                    We recommend setting the gas limit to <code>100,000</code>.<br />
 
                     <small>
                         You can check your conversion status on <a href="/status">this page</a>.
@@ -165,5 +168,5 @@
         };
     </script>
     <script src="/js/nacl-fast.min.js"></script>
-    <script src="/js/converter.js"></script>
+    <script src="/js/converter.js?ver=2"></script>
 @endsection
