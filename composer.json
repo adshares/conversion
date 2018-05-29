@@ -7,6 +7,11 @@
             "Adshares\\Ads\\": "app/"
         }
     },
+    "autoload-dev": {
+        "classmap": [
+            "database/"
+        ]
+    },
     "require": {
         "php": ">=7.2",
         "laravel/lumen-framework": "5.1.*",

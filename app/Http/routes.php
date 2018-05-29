@@ -26,5 +26,20 @@ $app->get('/', function () use ($app) {
 });
 
 $app->get('/status', function () use ($app) {
-    return view('status', ['environment' => $app->environment()]);
+
+    $db = app('db');
+
+    $transactions = $db->select(
+        'SELECT 
+          log_date,
+          from_address,
+          amount,
+          public_key
+        FROM transactions 
+        ORDER BY log_date DESC');
+
+    return view('status', [
+        'environment' => $app->environment(),
+        'transactions' => $transactions
+    ]);
 });

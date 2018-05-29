@@ -18,12 +18,19 @@
                 </tr>
                 </thead>
                 <tbody>
-                {{--<tr>--}}
-                {{--<th scope="row">23-05-2018 09:44:25</th>--}}
-                {{--<td>0x9c717a19aa86349769d9cc6815ab60ca2c987a8f</td>--}}
-                {{--<td>21 340.6789</td>--}}
-                {{--<td>0x0987654321</td>--}}
-                {{--</tr>--}}
+                @foreach ($transactions as $transaction)
+                    <tr>
+                        <th scope="row">{{ $transaction->log_date }}</th>
+                        <td>
+                            <a href="https://etherscan.io/address/{{ $transaction->from_address  }}"
+                               title="{{ $transaction->from_address  }}"
+                               rel="noopener"
+                               target="_blank">{{ substr($transaction->from_address, 0, 10) }}…</a>
+                        </td>
+                        <td>{{ $transaction->amount }}</td>
+                        <td>{{ $transaction->public_key }}</td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

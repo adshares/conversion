@@ -140,27 +140,27 @@
             <div class="col-xs-12 col-md-3">
                 <div class="footer-content__social-media row">
                     <div class="m-2">
-                        <a id="menu_down_social_telegram" href="https://t.me/adshares" target="_blank">
+                        <a id="menu_down_social_telegram" href="https://t.me/adshares" target="_blank" rel="noopener">
                             <img src="images/telegram.svg" width="16" height="16" alt="Telegram icon">
                         </a>
                     </div>
                     <div class="m-2">
-                        <a id="menu_down_social_twitter" href="https://twitter.com/adsharesNet" target="_blank">
+                        <a id="menu_down_social_twitter" href="https://twitter.com/adsharesNet" target="_blank" rel="noopener">
                             <img src="images/twitter.svg" alt="Twitter icon">
                         </a>
                     </div>
                     <div class="m-2">
-                        <a id="menu_down_social_facebook" href="https://www.facebook.com/adshares/" target="_blank">
+                        <a id="menu_down_social_facebook" href="https://www.facebook.com/adshares/" target="_blank" rel="noopener">
                             <img src="images/facebook.svg" alt="Facebook icon">
                         </a>
                     </div>
                     <div class="m-2">
-                        <a id="menu_down_social_github" href="https://github.com/adshares" target="_blank">
+                        <a id="menu_down_social_github" href="https://github.com/adshares" target="_blank" rel="noopener">
                             <img src="images/github.svg" alt="Github icon">
                         </a>
                     </div>
                     <div class="m-2">
-                        <a id="menu_down_social_medium" href="https://medium.com/adshares" target="_blank">
+                        <a id="menu_down_social_medium" href="https://medium.com/adshares" target="_blank" rel="noopener"Fa>
                             <img src="images/medium.svg" alt="Medium icon">
                         </a>
                     </div>
