@@ -16,11 +16,11 @@ $app->get('/', function () use ($app) {
     return view('converter', [
         'environment' => $app->environment(),
         'settings' => [
-            'contractAddress' => env('CONVERTER_CONTRACT_ADDRESS'),
-            'transferMethod' => env('CONVERTER_TRANSFER_METHOD'),
-            'burnAddress' => env('CONVERTER_BURN_ADDRESS'),
-            'minTokenAmount' => (int)env('CONVERTER_MIN_TOKEN_AMOUNT'),
-            'minMasterNodeTokenAmount' => (int)env('CONVERTER_MIN_MASTER_NODE_TOKEN_AMOUNT')
+            'contractAddress' => env('ADS_CONTRACT_ADDRESS'),
+            'transferMethod' => env('ADS_TRANSFER_METHOD'),
+            'burnAddress' => env('ADS_BURN_ADDRESS'),
+            'minTokenAmount' => (int)env('ADS_MIN_TOKEN_AMOUNT'),
+            'minMasterNodeTokenAmount' => (int)env('ADS_MIN_MASTER_NODE_TOKEN_AMOUNT')
         ]
     ]);
 });

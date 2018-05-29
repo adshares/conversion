@@ -38,14 +38,15 @@ See https://lumen.laravel.com/docs/5.1#installation
 
 ## Configuration
 
-Converter parameter with *CONVERTER_* prefix:
+Converter parameter with *ADS_* prefix:
 
 | Parameter                      | Default                                    |
 | ------------------------------ | :----------------------------------------- | 
 | *CONTRACT_ADDRESS*             | 0x422866a8f0b032c5cf1dfbdef31a20f4509562b0 |
-| *TRANSFER_METHOD*              | 0xa9059cbb                                 |  
+| *TRANSFER_METHOD*              | 0xa9059cbb                                 | 
+| *TRANSFER_TOPIC*               | 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef | 
 | *BURN_ADDRESS*                 | 0x0                                        | 
 | *MIN_TOKEN_AMOUNT*             | 1                                          | 
 | *MIN_MASTER_NODE_TOKEN_AMOUNT* | 20000                                      | 
-
+| *START_BLOCK*                  | 0x56BC12                                   |
 See https://lumen.laravel.com/docs/5.1#environment-configuration
