@@ -38,7 +38,7 @@ class Scanner implements LoggerAwareInterface
     /**
      * @var string
      */
-    private $burnAddress = '0x0000000000000000000000000000000000000000000000000000000000000000';
+    private $burnAddress = '0x0';
 
     /**
      * @var array
@@ -52,6 +52,19 @@ class Scanner implements LoggerAwareInterface
     public function __construct(string $url)
     {
         $this->web3 = new Web3($url);
+    }
+
+    /**
+     * @param string $hex
+     * @return string
+     */
+    public static function sanitizeHex(string $hex)
+    {
+        $result = strtolower($hex);
+        $result = preg_replace('/^0x/', '', $result);
+        $result = preg_replace('/^0+/', '', $result);
+
+        return $result;
     }
 
     /**
@@ -166,7 +179,7 @@ class Scanner implements LoggerAwareInterface
      */
     private function extractConversionData(\stdClass $transaction)
     {
-        if ($transaction->to !== $this->contractAddress) {
+        if (self::sanitizeHex($transaction->to) !== self::sanitizeHex($this->contractAddress)) {
 
             $this->logger->debug(sprintf(
                 'Incorrect contract address; got %s, should be %s',
@@ -181,7 +194,7 @@ class Scanner implements LoggerAwareInterface
         $this->logger->debug(sprintf('Transaction data %s', $input));
 
         $transferMethod = substr($input, 0, strlen($this->transferMethod));
-        if ($transferMethod !== $this->transferMethod) {
+        if (self::sanitizeHex($transferMethod) !== self::sanitizeHex($this->transferMethod)) {
             $this->logger->debug(sprintf(
                 'Incorrect transfer method; got %s, should be %s.',
                 $transferMethod,
@@ -207,7 +220,7 @@ class Scanner implements LoggerAwareInterface
         }
 
         // FIXME uncomment this
-//        if ('0x' . $data[0] !== $this->burnAddress) {
+//        if (self::sanitizeHex($data[0]) !== self::sanitizeHex($this->burnAddress)) {
 //            $this->logger->debug(sprintf(
 //                'Incorrect burn address; got %s, should be %s.',
 //                '0x' . $data[0],
