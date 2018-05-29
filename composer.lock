@@ -1668,16 +1668,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.29.0",
+            "version": "1.29.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "b1cc4493fafb1b1402d50474fe6305e0558c6829"
+                "reference": "861f8da904c6d4ee937b25d6f4d35a18a8e1e1ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/b1cc4493fafb1b1402d50474fe6305e0558c6829",
-                "reference": "b1cc4493fafb1b1402d50474fe6305e0558c6829",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/861f8da904c6d4ee937b25d6f4d35a18a8e1e1ac",
+                "reference": "861f8da904c6d4ee937b25d6f4d35a18a8e1e1ac",
                 "shasum": ""
             },
             "require": {
@@ -1712,7 +1712,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2018-05-24T13:09:20+00:00"
+            "time": "2018-05-24T16:44:37+00:00"
         },
         {
             "name": "nikic/fast-route",
@@ -2000,12 +2000,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sc0Vu/web3.php.git",
-                "reference": "4eaebd48aa6626026ecb09a079f938651a4a7187"
+                "reference": "5d04cec73f009d9e08b3b01ec655503f93e1d0c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sc0Vu/web3.php/zipball/4eaebd48aa6626026ecb09a079f938651a4a7187",
-                "reference": "4eaebd48aa6626026ecb09a079f938651a4a7187",
+                "url": "https://api.github.com/repos/sc0Vu/web3.php/zipball/5d04cec73f009d9e08b3b01ec655503f93e1d0c4",
+                "reference": "5d04cec73f009d9e08b3b01ec655503f93e1d0c4",
                 "shasum": ""
             },
             "require": {
@@ -2034,7 +2034,7 @@
                 }
             ],
             "description": "Ethereum web3 interface.",
-            "time": "2018-05-18T04:03:27+00:00"
+            "time": "2018-05-27T15:01:46+00:00"
         },
         {
             "name": "symfony/console",
@@ -3262,16 +3262,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "6.0.4",
+            "version": "6.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "52187754b0eed0b8159f62a6fa30073327e8c2ca"
+                "reference": "4cab20a326d14de7575a8e235c70d879b569a57a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/52187754b0eed0b8159f62a6fa30073327e8c2ca",
-                "reference": "52187754b0eed0b8159f62a6fa30073327e8c2ca",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/4cab20a326d14de7575a8e235c70d879b569a57a",
+                "reference": "4cab20a326d14de7575a8e235c70d879b569a57a",
                 "shasum": ""
             },
             "require": {
@@ -3321,7 +3321,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-04-29T14:59:09+00:00"
+            "time": "2018-05-28T11:49:20+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",

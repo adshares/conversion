@@ -33,7 +33,7 @@ class ScanCommand extends Command
         $url = $this->input->getOption('url');
         $this->info(sprintf('Scanner starting on %s', $url));
 
-        $scanner = new Scanner($url);
+        $scanner = new Scanner($url, app('db'));
 
         $scanner->setStartBlock(env('ASD_START_BLOCK'));
         $scanner->setTransferTopic(env('ASD_TRANSFER_TOPIC'));

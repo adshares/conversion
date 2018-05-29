@@ -2,6 +2,7 @@
 
 namespace Adshares\Ads\Scanner;
 
+use Illuminate\Database\DatabaseManager;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Web3\Web3;
@@ -16,7 +17,12 @@ class Scanner implements LoggerAwareInterface
     private $web3;
 
     /**
-     * @var string
+     * @var DatabaseManager
+     */
+    private $db;
+
+    /**
+     * @var int
      */
     private $startBlock;
 
@@ -48,17 +54,19 @@ class Scanner implements LoggerAwareInterface
     /**
      * Scanner constructor.
      * @param string $url
+     * @param DatabaseManager $db
      */
-    public function __construct(string $url)
+    public function __construct(string $url, DatabaseManager $db)
     {
         $this->web3 = new Web3($url);
+        $this->db = $db;
     }
 
 
     /**
-     * @param string $startBlock
+     * @param int $startBlock
      */
-    public function setStartBlock(string $startBlock): void
+    public function setStartBlock(int $startBlock): void
     {
         $this->startBlock = $startBlock;
     }
@@ -109,15 +117,40 @@ class Scanner implements LoggerAwareInterface
     }
 
     /**
+     * @return int
+     */
+    private function getBlockNumber(): int
+    {
+        $result = $this->db->select('SELECT MAX(block_number) AS block_number FROM scans');
+        $result = array_pop($result);
+
+        return null !== $result->block_number ? (int)$result->block_number + 1 : $this->startBlock;
+    }
+
+    /**
+     * @param int $blockNumber
+     * @return bool
+     */
+    private function saveBlockNumber(int $blockNumber): bool
+    {
+        return $this->db->insert(
+            'INSERT INTO scans ( block_number ) VALUES (?)',
+            [$blockNumber]
+        );
+    }
+
+
+    /**
      * @param int $retry
+     * @param int $blockNumber
      * @return string|null
      */
-    private function createFilter(int $retry = 2): ?string
+    private function createFilter(int $blockNumber, int $retry = 2): ?string
     {
         $id = null;
 
         $this->web3->eth->newFilter([
-            'fromBlock' => $this->startBlock,
+            'fromBlock' => '0x' . dechex($blockNumber),
             'topics' => [$this->transferTopic],
             'address' => $this->contractAddress
         ], function ($err, $result) use (&$id) {
@@ -132,7 +165,7 @@ class Scanner implements LoggerAwareInterface
         });
 
         if (null === $id && $retry) {
-            $id = $this->createFilter(--$retry);
+            $id = $this->createFilter($blockNumber, --$retry);
         }
 
         return $id;
@@ -140,13 +173,14 @@ class Scanner implements LoggerAwareInterface
 
     /**
      * @param int $retry
+     * @param int $blockNumber
      * @return array
      */
-    private function getLogs(int $retry = 2): array
+    private function getLogs(int $blockNumber, int $retry = 2): array
     {
         $logs = null;
 
-        if (null === ($filter = $this->createFilter())) {
+        if (null === ($filter = $this->createFilter($blockNumber))) {
             return [];
         }
 
@@ -162,7 +196,7 @@ class Scanner implements LoggerAwareInterface
         });
 
         if (null === $logs && $retry) {
-            $logs = $this->getLogs(--$retry);
+            $logs = $this->getLogs($blockNumber, --$retry);
         }
 
         return null === $logs ? [] : $logs;
@@ -271,9 +305,6 @@ class Scanner implements LoggerAwareInterface
         $data = substr($input, strlen($this->transferMethod));
         $data = str_split($data, 64);
 
-        // FIXME remove this mock
-        if (!isset($data[2])) $data[2] = $data[0];
-
         if (3 !== count($data)) {
             $this->logger->debug(sprintf(
                 'Incorrect number of parameters; got %d, should be 3.',
@@ -283,16 +314,15 @@ class Scanner implements LoggerAwareInterface
             return false;
         }
 
-        // FIXME uncomment this
-//        if (self::sanitizeHex($data[0]) !== self::sanitizeHex($this->burnAddress)) {
-//            $this->logger->debug(sprintf(
-//                'Incorrect burn address; got %s, should be %s.',
-//                '0x' . $data[0],
-//                $this->burnAddress
-//            ));
-//
-//            return false;
-//        }
+        if (self::sanitizeHex($data[0]) !== self::sanitizeHex($this->burnAddress)) {
+            $this->logger->debug(sprintf(
+                'Incorrect burn address; got %s, should be %s.',
+                '0x' . $data[0],
+                $this->burnAddress
+            ));
+
+            return false;
+        }
 
         $burnAmountData = '0x' . preg_replace('/^0+/', '', $data[1]);
         if (1 > ($burnAmount = (int)hexdec($burnAmountData))) {
@@ -326,17 +356,18 @@ class Scanner implements LoggerAwareInterface
      */
     private function saveTransaction(\stdClass $transaction): bool
     {
-
-//            dump($transaction);
-        dump($transaction->from);
-        dump($transaction->to);
-        dump($transaction->timestamp);
-        dump($transaction->burnAmount);
-        dump($transaction->conversionKey);
-
-//            dump( new \DateTime('@' . $transaction->timestamp));
-
-        return true;
+        return $this->db->insert(
+            'INSERT INTO transactions (
+                from_address,
+                log_date,
+                amount,
+                public_key
+            ) VALUES (?, ?, ?, ?)', [
+            $transaction->from,
+            new \DateTime('@' . $transaction->timestamp),
+            $transaction->burnAmount,
+            $transaction->conversionKey
+        ]);
     }
 
     /**
@@ -344,35 +375,46 @@ class Scanner implements LoggerAwareInterface
      */
     public function scan(): int
     {
-        $eth = $this->web3->eth;
-        $this->logger->debug('Scanning...');
+        $blockNumber = $this->getBlockNumber();
+        $this->logger->info(sprintf('Scanning from block %d...', $blockNumber));
 
-        $logs = $this->getLogs();
+        $logs = $this->getLogs($blockNumber);
         $this->logger->info(sprintf('Found %d logs', count($logs)));
+        if (empty($logs)) {
+            return 0;
+        }
 
         $count = 0;
-        foreach ($logs as $log) {
-            $this->logger->debug(sprintf('Converting %s', $log->transactionHash));
+        $this->db->transaction(function () use ($blockNumber, $logs, &$count) {
 
-            if (null === ($transaction = $this->getTransaction($log->transactionHash))) {
-                $this->logger->error(sprintf('Cannot fetch transaction %s', $log->transactionHash));
-                continue;
+            foreach ($logs as $log) {
+                $this->logger->debug(sprintf('Converting %s', $log->transactionHash));
+                $blockNumber = max($blockNumber, hexdec($log->blockNumber));
+
+                if (null === ($transaction = $this->getTransaction($log->transactionHash))) {
+                    throw new \RuntimeException(sprintf('Cannot fetch transaction %s', $log->transactionHash));
+                }
+
+                if (!$this->extractConversionData($transaction)) {
+                    $this->logger->warning(sprintf('Cannot convert transaction %s', $log->transactionHash));
+                    continue;
+                }
+
+                $transaction->timestamp = $this->getBlockTimestamp($log->blockHash);
+
+                if (!$this->saveTransaction($transaction)) {
+                    throw new \RuntimeException(sprintf('Cannot save transaction %s', $log->transactionHash));
+                }
+
+                ++$count;
             }
 
-            if (!$this->extractConversionData($transaction)) {
-                $this->logger->warning(sprintf('Cannot convert transaction %s', $log->transactionHash));
-                continue;
+            if (!$this->saveBlockNumber($blockNumber)) {
+                throw new \RuntimeException('Cannot log scan');
             }
 
-            $transaction->timestamp = $this->getBlockTimestamp($log->blockHash);
-
-            if (!$this->saveTransaction($transaction)) {
-                $this->logger->error(sprintf('Cannot save transaction %s', $log->transactionHash));
-                continue;
-            }
-
-            ++$count;
-        }
+            $this->logger->info(sprintf('Scanned to block %d', $blockNumber));
+        });
 
         return $count;
     }
