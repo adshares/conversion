@@ -345,7 +345,7 @@ class Scanner implements LoggerAwareInterface
         }
 
         $transaction->burnAmount = $burnAmount;
-        $transaction->conversionKey = '0x' . $data[2];
+        $transaction->conversionKey = strtoupper($data[2]);
 
         return true;
     }

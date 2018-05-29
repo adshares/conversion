@@ -37,10 +37,11 @@
                                                 class="badge badge-secondary">PK</span></label>
                                 </div>
                                 <div class="col-sm-6 text-right">
-                                    <a href="https://github.com/adshares/esc/wiki/How-to-generate-esc-keys"
+                                    <a href="https://github.com/adshares/ads/wiki/How-to-generate-ADS-keys"
                                        target="_blank"
-                                       title="How to generate ESC keys?">
-                                        <small>How to generate ESC keys?</small>
+                                       rel="noopener"
+                                       title="How to generate ADS keys?">
+                                        <small>How to generate ADS keys?</small>
                                     </a>
                                 </div>
                             </div>
@@ -93,7 +94,7 @@
 
                     <div class="alert alert-warning mb-3" role="alert" id="masterNodeWarning">
                         <p>
-                            To become masternode operators in the ESC network without having to pay a fee you have to
+                            To become masternode operators in the ADS network without having to pay a fee you have to
                             destroy (burn) at least <span class="minMasterNodeTokenAmount">20,000</span> ADST.
                         </p>
                         <hr>
@@ -139,9 +140,10 @@
                         </p>
                         <p class="mb-0">
                             <small>You can find more about keys on <a
-                                        href="https://github.com/adshares/esc/wiki/How-to-generate-esc-keys"
+                                        href="https://github.com/adshares/ads/wiki/How-to-generate-ADS-keys"
                                         target="_blank"
-                                        title="How to generate ESC keys?">this page</a>.
+                                        rel="noopener"
+                                        title="How to generate ADS keys?">this page</a>.
                             </small>
                         </p>
                         <hr>
