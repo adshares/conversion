@@ -31,12 +31,16 @@ class ScanCommand extends Command
     public function fire()
     {
         $url = $this->input->getOption('url');
+        if (null === $url) {
+            $url = env('ADS_NODE_URL');
+        }
+
         $this->info(sprintf('Scanner starting on %s', $url));
 
         $scanner = new Scanner($url, app('db'));
 
-        $scanner->setStartBlock(env('ASD_START_BLOCK'));
-        $scanner->setTransferTopic(env('ASD_TRANSFER_TOPIC'));
+        $scanner->setStartBlock(env('ADS_START_BLOCK'));
+        $scanner->setTransferTopic(env('ADS_TRANSFER_TOPIC'));
         $scanner->setTransferMethod(env('ADS_TRANSFER_METHOD'));
         $scanner->setContractAddress(env('ADS_CONTRACT_ADDRESS'));
         $scanner->setBurnAddress(env('ADS_BURN_ADDRESS'));
@@ -55,7 +59,7 @@ class ScanCommand extends Command
     protected function getOptions()
     {
         return [
-            ['url', null, InputOption::VALUE_OPTIONAL, 'The ethereum node host URL', 'http://localhost:8545']
+            ['url', null, InputOption::VALUE_OPTIONAL, 'The ethereum node host URL']
         ];
     }
 }
