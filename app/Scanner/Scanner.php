@@ -18,27 +18,27 @@ class Scanner implements LoggerAwareInterface
     /**
      * @var string
      */
-    private $startBlock = '0x56BC12';
+    private $startBlock;
 
     /**
      * @var string
      */
-    private $transferTopic = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
+    private $transferTopic;
 
     /**
      * @var string
      */
-    private $transferMethod = '0xa9059cbb';
+    private $transferMethod;
 
     /**
      * @var string
      */
-    private $contractAddress = '0x422866a8f0b032c5cf1dfbdef31a20f4509562b0';
+    private $contractAddress;
 
     /**
      * @var string
      */
-    private $burnAddress = '0x0';
+    private $burnAddress;
 
     /**
      * @var array
@@ -54,11 +54,52 @@ class Scanner implements LoggerAwareInterface
         $this->web3 = new Web3($url);
     }
 
+
+    /**
+     * @param string $startBlock
+     */
+    public function setStartBlock(string $startBlock): void
+    {
+        $this->startBlock = $startBlock;
+    }
+
+    /**
+     * @param string $transferTopic
+     */
+    public function setTransferTopic(string $transferTopic): void
+    {
+        $this->transferTopic = $transferTopic;
+    }
+
+    /**
+     * @param string $transferMethod
+     */
+    public function setTransferMethod(string $transferMethod): void
+    {
+        $this->transferMethod = $transferMethod;
+    }
+
+    /**
+     * @param string $contractAddress
+     */
+    public function setContractAddress(string $contractAddress): void
+    {
+        $this->contractAddress = $contractAddress;
+    }
+
+    /**
+     * @param string $burnAddress
+     */
+    public function setBurnAddress(string $burnAddress): void
+    {
+        $this->burnAddress = $burnAddress;
+    }
+
     /**
      * @param string $hex
      * @return string
      */
-    public static function sanitizeHex(string $hex)
+    public static function sanitizeHex(string $hex): string
     {
         $result = strtolower($hex);
         $result = preg_replace('/^0x/', '', $result);
@@ -68,9 +109,9 @@ class Scanner implements LoggerAwareInterface
     }
 
     /**
-     * @return int
+     * @return string
      */
-    private function createFilter()
+    private function createFilter(): string
     {
         $id = 0;
 
@@ -96,7 +137,7 @@ class Scanner implements LoggerAwareInterface
      * @param string $id
      * @return array
      */
-    private function getLogs(string $id)
+    private function getLogs(string $id): array
     {
         $logs = [];
 
@@ -118,7 +159,7 @@ class Scanner implements LoggerAwareInterface
      * @param string $hash
      * @return \stdClass
      */
-    private function getBlock(string $hash)
+    private function getBlock(string $hash): \stdClass
     {
         if (!isset($this->blockCache[$hash])) {
             $this->web3->eth->getBlockByHash($hash, false, function ($err, $result) {
@@ -140,7 +181,7 @@ class Scanner implements LoggerAwareInterface
      * @param string $hash
      * @return int
      */
-    private function getBlockTimestamp(string $hash)
+    private function getBlockTimestamp(string $hash): int
     {
         if (null === ($block = $this->getBlock($hash))) {
             $this->logger->error(sprintf('Cannot fetch block %s', $hash));
@@ -155,7 +196,7 @@ class Scanner implements LoggerAwareInterface
      * @param string $hash
      * @return \stdClass
      */
-    private function getTransaction(string $hash)
+    private function getTransaction(string $hash): \stdClass
     {
         $transaction = null;
 
@@ -177,7 +218,7 @@ class Scanner implements LoggerAwareInterface
      * @param \stdClass $transaction
      * @return bool
      */
-    private function extractConversionData(\stdClass $transaction)
+    private function extractConversionData(\stdClass $transaction): bool
     {
         if (self::sanitizeHex($transaction->to) !== self::sanitizeHex($this->contractAddress)) {
 
@@ -220,15 +261,15 @@ class Scanner implements LoggerAwareInterface
         }
 
         // FIXME uncomment this
-//        if (self::sanitizeHex($data[0]) !== self::sanitizeHex($this->burnAddress)) {
-//            $this->logger->debug(sprintf(
-//                'Incorrect burn address; got %s, should be %s.',
-//                '0x' . $data[0],
-//                $this->burnAddress
-//            ));
-//
-//            return false;
-//        }
+        if (self::sanitizeHex($data[0]) !== self::sanitizeHex($this->burnAddress)) {
+            $this->logger->debug(sprintf(
+                'Incorrect burn address; got %s, should be %s.',
+                '0x' . $data[0],
+                $this->burnAddress
+            ));
+
+            return false;
+        }
 
         $burnAmountData = '0x' . preg_replace('/^0+/', '', $data[1]);
         if (1 > ($burnAmount = (int)hexdec($burnAmountData))) {
@@ -260,7 +301,7 @@ class Scanner implements LoggerAwareInterface
      * @param \stdClass $transaction
      * @return bool
      */
-    private function saveTransaction(\stdClass $transaction)
+    private function saveTransaction(\stdClass $transaction): bool
     {
         dump($transaction->from);
         dump($transaction->to);
@@ -274,7 +315,7 @@ class Scanner implements LoggerAwareInterface
     /**
      * @return int
      */
-    public function scan()
+    public function scan(): int
     {
         $eth = $this->web3->eth;
         $this->logger->debug('Scanning...');
