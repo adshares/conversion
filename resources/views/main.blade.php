@@ -110,8 +110,8 @@
 <div class="nav-container">
     <nav class="navbar mx-auto">
         <a class="navbar-brand mr-auto" href="#">
-            <img class="d-none d-sm-inline" src="/images/logo_h.svg" width="160" height="40" alt="">
-            <img class="d-inline d-sm-none" src="/images/logo_x.svg" width="40" height="40" alt="">
+            <img class="d-none d-sm-inline" src="/images/logo_h.png" width="160" height="40" alt="">
+            <img class="d-inline d-sm-none" src="/images/logo_x.png" width="40" height="40" alt="">
         </a>
 
         <ul class="nav my-2 my-lg-0">
