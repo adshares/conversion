@@ -5,6 +5,9 @@
         table td.date {
             white-space: nowrap;
         }
+        table pre {
+            margin-bottom: 0;
+        }
     </style>
 @endsection
 @section('content')
@@ -28,15 +31,15 @@
                     <tbody>
                     @foreach ($transactions as $transaction)
                         <tr>
-                            <td scope="row" class="date">{{ $transaction->log_date }}</td>
+                            <td scope="row" class="date"><pre>{{ $transaction->log_date }}</pre></td>
                             <td>
                                 <a href="https://etherscan.io/address/{{ $transaction->from_address  }}"
                                    title="{{ $transaction->from_address  }}"
                                    rel="noopener"
-                                   target="_blank">{{ substr($transaction->from_address, 0, 10) }}…</a>
+                                   target="_blank"><pre>{{ substr($transaction->from_address, 0, 10) }}…</pre></a>
                             </td>
-                            <td>{{ $transaction->amount }}</td>
-                            <td>{{ $transaction->public_key }}</td>
+                            <td class="text-right pr-4"><pre>{{ $transaction->amount }}</pre></td>
+                            <td><pre>{{ $transaction->public_key }}</pre></td>
                         </tr>
                     @endforeach
                     </tbody>
