@@ -8,13 +8,17 @@
         table pre {
             margin-bottom: 0;
         }
+        h1 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
     </style>
 @endsection
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col">
-                <h1 class="text-center mt-4">@yield('title')</h1>
+                <h1 class="text-center mt-4">Genesis registration has been completed</h1>
             </div>
         </div>
         <div class="row">
