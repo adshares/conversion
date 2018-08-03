@@ -29,7 +29,7 @@
                         <th scope="col">Date</th>
                         <th scope="col">Address</th>
                         <th scope="col">Amount</th>
-                        <th scope="col">Key</th>
+                        <th scope="col">Public key</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -42,7 +42,7 @@
                                    rel="noopener"
                                    target="_blank"><pre>{{ substr($transaction->from_address, 0, 10) }}…</pre></a>
                             </td>
-                            <td class="text-right pr-4"><pre>{{ $transaction->amount }}</pre></td>
+                            <td class="text-right pr-4"><pre>{{ number_format($transaction->amount) }}</pre></td>
                             <td><pre>{{ $transaction->public_key }}</pre></td>
                         </tr>
                     @endforeach

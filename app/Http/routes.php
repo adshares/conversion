@@ -32,16 +32,46 @@ $app->get('/status', function () use ($app) {
     $db = app('db');
 
     $transactions = $db->select(
-        'SELECT 
+        'SELECT
           log_date,
           from_address,
           amount,
           public_key
-        FROM transactions 
+        FROM transactions
         ORDER BY log_date DESC');
 
     return view('status', [
         'environment' => $app->environment(),
         'transactions' => $transactions
+    ]);
+});
+
+$app->get('/genesis', function () use ($app) {
+
+    $db = app('db');
+
+    $nodes = $db->select(
+        'SELECT
+          id,
+          num,
+          public_key
+        FROM genesis_nodes
+        ORDER BY id ASC');
+
+    $accounts = $db->select(
+        'SELECT
+          node_id,
+          id,
+          num,
+          address,
+          amount,
+          public_key
+        FROM genesis_accounts
+        ORDER BY node_id, id ASC');
+
+    return view('genesis', [
+        'environment' => $app->environment(),
+        'nodes' => $nodes,
+        'accounts' => $accounts
     ]);
 });
