@@ -67,10 +67,10 @@
                     @foreach ($accounts as $account)
                         <tr>
                             <td scope="row"><pre>{{ $account->node_id }}</pre></td>
-                            <td class="text-right pr-4"><pre>{{ $account->id }}</pre></td>
-                            <td class="text-right pr-4"><pre>{{ $account->num }}</pre></td>
-                            <td class="text-right pr-4"><pre>{{ $account->address }}</pre></td>
-                            <td class="text-right pr-4"><pre>{{ $account->amount }}</pre></td>
+                            <td class="pr-4"><pre>{{ $account->id }}</pre></td>
+                            <td class="pr-4"><pre>{{ $account->num }}</pre></td>
+                            <td class="pr-4"><pre>{{ $account->address }}</pre></td>
+                            <td class="text-right pr-4"><pre>{{ number_format($account->amount, 2) }}</pre></td>
                             <td><pre>{{ $account->public_key }}</pre></td>
                         </tr>
                     @endforeach

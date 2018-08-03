@@ -118,9 +118,9 @@
             {{--<li class="nav-item">--}}
                 {{--<a class="nav-link" href="/">Converter</a>--}}
             {{--</li>--}}
-            {{--<li class="nav-item">--}}
-                {{--<a class="nav-link" href="/status">Status</a>--}}
-            {{--</li>--}}
+            <li class="nav-item">
+                <a class="nav-link" href="/status">Status</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="/genesis">Genesis</a>
             </li>
