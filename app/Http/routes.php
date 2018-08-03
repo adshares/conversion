@@ -13,7 +13,7 @@
 
 $app->get('/', function () use ($app) {
 
-    return redirect('/status');
+    return redirect('/genesis');
 
 //    return view('converter', [
 //        'environment' => $app->environment(),
@@ -29,19 +29,51 @@ $app->get('/', function () use ($app) {
 
 $app->get('/status', function () use ($app) {
 
+    return redirect('/genesis');
+
+//    $db = app('db');
+//
+//    $transactions = $db->select(
+//        'SELECT
+//          log_date,
+//          from_address,
+//          amount,
+//          public_key
+//        FROM transactions
+//        ORDER BY log_date DESC');
+//
+//    return view('status', [
+//        'environment' => $app->environment(),
+//        'transactions' => $transactions
+//    ]);
+});
+
+$app->get('/genesis', function () use ($app) {
+
     $db = app('db');
 
-    $transactions = $db->select(
-        'SELECT 
-          log_date,
-          from_address,
+    $nodes = $db->select(
+        'SELECT
+          id,
+          num,
+          public_key
+        FROM genesis_nodes
+        ORDER BY id ASC');
+
+    $accounts = $db->select(
+        'SELECT
+          node_id,
+          id,
+          num,
+          address,
           amount,
           public_key
-        FROM transactions 
-        ORDER BY log_date DESC');
+        FROM genesis_accounts
+        ORDER BY node_id, id ASC');
 
-    return view('status', [
+    return view('genesis', [
         'environment' => $app->environment(),
-        'transactions' => $transactions
+        'nodes' => $nodes,
+        'accounts' => $accounts
     ]);
 });

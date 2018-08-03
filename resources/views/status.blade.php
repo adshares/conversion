@@ -29,7 +29,7 @@
                         <th scope="col">Date</th>
                         <th scope="col">Address</th>
                         <th scope="col">Amount</th>
-                        <th scope="col">Key</th>
+                        <th scope="col">Public key</th>
                     </tr>
                     </thead>
                     <tbody>
