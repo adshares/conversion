@@ -49,4 +49,6 @@ Converter parameter with *ADS_* prefix:
 | *MIN_TOKEN_AMOUNT*             | 1                                          | 
 | *MIN_MASTER_NODE_TOKEN_AMOUNT* | 20000                                      | 
 | *START_BLOCK*                  | 0x56BC12                                   |
+
+
 See https://lumen.laravel.com/docs/5.1#environment-configuration
