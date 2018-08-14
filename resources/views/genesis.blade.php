@@ -21,12 +21,15 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col">
+            <div class="col text-center">
                 <h1 class="text-center mt-4">Genesis block</h1>
+                <br>
+                <a class="btn btn-primary" role="button" href="#nodes">Nodes</a>
+                <a class="btn btn-primary" role="button" href="#accounts">Accounts</a>
             </div>
         </div>
         <div class="row">
-            <h2 class="text-center mt-4">Nodes</h2>
+            <h2 class="text-center mt-4" id="nodes">Nodes</h2>
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
                     <thead>
@@ -48,7 +51,7 @@
         </div>
 
         <div class="row">
-            <h2 class="text-center mt-4">Accounts</h2>
+            <h2 class="text-center mt-4" id="accounts">Accounts</h2>
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
                     <thead>
