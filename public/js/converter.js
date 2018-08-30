@@ -11,8 +11,8 @@ String.prototype.hexToByte = function () {
         return new Uint8Array();
     }
 
-    var a = [];
-    for (var i = 0, len = this.length; i < len; i += 2) {
+    let a = [];
+    for (let i = 0, len = this.length; i < len; i += 2) {
         a.push(parseInt(this.substr(i, 2), 16));
     }
 
@@ -31,36 +31,53 @@ Number.prototype.formatMoney = function (precision, decimal, thousand) {
     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 };
 
-converter.generateTransactionData = function (amount, key) {
+converter.generateTransactionData = function (amount, address) {
 
     let data = "0x";
     data += converter.settings.transferMethod.sanitizeHex();
     data += converter.settings.burnAddress.sanitizeHex().padStart(64, "0");
     data += Number(amount).toString(16).padStart(64, "0");
-    data += key.sanitizeHex().padStart(64, "0");
+    data += address.replace(/[^0-9a-fA-F]/g, '').sanitizeHex();
 
     return data;
 };
 
-converter.verifyKey = function (signature, key) {
+converter.crc16 = function(data) {
+    data = data.sanitizeHex().hexToByte();
 
-    if (!key || !signature) {
+    let crc = 0x1d0f;
+    for (let b of data) {
+        let x = (crc >> 8) ^ b;
+        x ^= x >> 4;
+        crc = ((crc << 8) ^ ((x << 12)) ^ ((x << 5)) ^ (x)) & 0xFFFF;
+    }
+
+    return crc.toString(16)
+}
+
+converter.verifyAddress = function (address) {
+
+    if (!address) {
         return false;
     }
 
-    return nacl.sign.detached.verify(new Uint8Array(), signature.sanitizeHex().hexToByte(), key.sanitizeHex().hexToByte());
+    const addressRegexp = /^([0-9a-fA-F]{4})-([0-9a-fA-F]{8})-([0-9a-fA-F]{4})$/;
+    const matches = addressRegexp.exec(address);
+
+    if (matches.length !== 4) {
+        return false;
+    }
+
+    return matches[3].sanitizeHex() === converter.crc16(matches[1] + matches[2]);
 };
 
 converter.validateForm = function (filed) {
 
     const amountInput = $('#amountInput');
-    const keyInput = $('#keyInput');
-    const signatureInput = $('#signatureInput');
+    const addressInput = $('#addressInput');
 
     let amount = amountInput.val().trim();
-    let key = keyInput.val().trim();
-    let signature = signatureInput.val().trim();
-    let doubleCheck = $('#doubleCheckInput').prop('checked');
+    let address = addressInput.val().trim();
 
     let valid = true;
 
@@ -73,33 +90,22 @@ converter.validateForm = function (filed) {
         }
     }
 
-    if (typeof filed === 'undefined' || filed === 'key') {
-        if (!/^(0x)?[0-9a-fA-F]{64}$/.test(key)) {
-            keyInput.removeClass('is-valid').addClass('is-invalid');
+    if (typeof filed === 'undefined' || filed === 'address') {
+        if (!/^[0-9a-fA-F]{4}-[0-9a-fA-F]{8}-[0-9a-fA-F]{4}$/.test(address)) {
+            addressInput.removeClass('is-valid').addClass('is-invalid');
             valid = false;
-        } else {
-            keyInput.removeClass('is-invalid').addClass('is-valid');
-        }
-    }
-
-    if (typeof filed === 'undefined' || filed === 'signature') {
-        if (doubleCheck) {
-            if (!/^(0x)?[0-9a-fA-F]{128}$/.test(signature)) {
-                signatureInput.removeClass('is-valid').addClass('is-invalid');
-                valid = false;
-            } else if (!converter.verifyKey(signature, key)) {
-                signatureInput.removeClass('is-valid').addClass('is-invalid');
-                valid = false;
-                if (key && (key != converter.tmp.key || signature != converter.tmp.signature || typeof filed === 'undefined')) {
-                    $('#keyWarningModal').modal();
-                }
-            } else {
-                signatureInput.removeClass('is-invalid').addClass('is-valid');
+        } else if (!converter.verifyAddress(address)) {
+          addressInput.removeClass('is-valid').addClass('is-invalid');
+            valid = false;
+            if (address !== converter.tmp.address || typeof filed === 'undefined') {
+                $('#addressWarningModal').modal();
             }
-
-            converter.tmp.key = key;
-            converter.tmp.signature = signature;
+        } else {
+          addressInput.removeClass('is-invalid').addClass('is-valid');
         }
+
+        converter.tmp.address = address;
+
     }
 
     return valid;
@@ -109,14 +115,11 @@ $(document).ready(function ($) {
 
     $('.contractAddress').text(converter.settings.contractAddress);
     $('.minTokenAmount').text(converter.settings.minTokenAmount);
-    $('.minMasterNodeTokenAmount').text(converter.settings.minMasterNodeTokenAmount.formatMoney(0));
 
     const amountInput = $('#amountInput');
-    const keyInput = $('#keyInput');
-    const signatureInput = $('#signatureInput');
-    const doubleCheckInput = $('#doubleCheckInput');
+    const addressInput = $('#addressInput');
 
-    converter.tmp = {key: '', signature: ''};
+    converter.tmp = {address: ''};
 
     $('#converterForm').submit(function (event) {
 
@@ -126,16 +129,10 @@ $(document).ready(function ($) {
         if (converter.validateForm()) {
 
             let amount = parseInt($('#amountInput').val().trim());
-            let key = $('#keyInput').val().trim();
+            let address = $('#addressInput').val().trim();
 
             $('.tokenAmount').text(amount.formatMoney(0));
-            $('#transactionData').text(converter.generateTransactionData(amount, key));
-
-            if (amount < converter.settings.minMasterNodeTokenAmount) {
-                $('#masterNodeWarning').show();
-            } else {
-                $('#masterNodeWarning').hide();
-            }
+            $('#transactionData').text(converter.generateTransactionData(amount, address));
 
             $('#convertModal').modal()
         }
@@ -145,29 +142,8 @@ $(document).ready(function ($) {
         converter.validateForm('amount');
     });
 
-    keyInput.bind("keyup change", function (event) {
-        if (converter.validateForm('key') && signatureInput.val()) {
-            converter.validateForm('signature');
-        }
-    });
-
-    signatureInput.bind("keyup change", function (event) {
-        converter.validateForm('key');
-        converter.validateForm('signature');
-    });
-
-    doubleCheckInput.change(function (event) {
-        if (doubleCheckInput.prop('checked')) {
-            signatureInput.prop('disabled', false);
-            if (signatureInput.val()) {
-                converter.validateForm('signature');
-            }
-        } else {
-            signatureInput
-                .prop('disabled', true)
-                .removeClass('is-valid')
-                .removeClass('is-invalid');
-        }
+    addressInput.bind("keyup change", function (event) {
+        converter.validateForm('address');
     });
 
     $('#generateButton').removeAttr('disabled');

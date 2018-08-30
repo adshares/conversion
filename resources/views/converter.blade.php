@@ -18,7 +18,7 @@
                                 <input type="number" step="1" min="{{ $settings['minTokenAmount'] }}"
                                        class="form-control" id="amountInput"
                                        placeholder="Enter amount" required
-                                       value="{{ $settings['minMasterNodeTokenAmount'] }}">
+                                       value="{{ $settings['minTokenAmount'] }}">
                                 <div class="input-group-append">
                                     <span class="input-group-text">ADST</span>
                                 </div>
@@ -33,41 +33,23 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <label for="keyInput">Public key <span
-                                                class="badge badge-secondary">PK</span></label>
+                                    <label for="keyInput">Account address <span class="badge badge-secondary">ADS</span></label>
                                 </div>
                                 <div class="col-sm-6 text-right">
-                                    <a href="https://github.com/adshares/ads/wiki/How-to-generate-ADS-keys"
+                                    <a href="https://github.com/adshares/ads/wiki/How-to-convert-ADST-tokens"
                                        target="_blank"
                                        rel="noopener"
-                                       title="How to generate ADS keys?">
-                                        <small>How to generate ADS keys?</small>
+                                       title="How to get the ADS account?">
+                                        <small>How to get the ADS account?</small>
                                     </a>
                                 </div>
                             </div>
-                            <textarea class="form-control" id="keyInput" placeholder="Enter public key" rows="3"
-                                      required></textarea>
+                            <input class="form-control" id="addressInput" placeholder="Enter the ADS account address" required />
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
                             <div class="invalid-feedback">
-                                Please provide a valid public key.
-                            </div>
-                        </div>
-                        <div class="form-group form-check">
-                            <input type="checkbox" class="form-check-input" id="doubleCheckInput" checked>
-                            <label class="form-check-label" for="doubleCheckInput">Double key verification</label>
-                        </div>
-                        <div class="form-group">
-                            <label for="signatureInput">Empty string signature <span
-                                        class="badge badge-secondary">SG</span></label>
-                            <textarea class="form-control" id="signatureInput" placeholder="Enter signature"
-                                      rows="5"></textarea>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                            <div class="invalid-feedback">
-                                Please provide a valid signature.
+                                Please provide a valid ADS account address.
                             </div>
                         </div>
                     </div>
@@ -92,14 +74,9 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class="alert alert-warning mb-3" role="alert" id="masterNodeWarning">
-                        <p>
-                            To become masternode operators in the ADS network without having to pay a fee you have to
-                            destroy (burn) at least <span class="minMasterNodeTokenAmount">20,000</span> ADST.
-                        </p>
-                        <hr>
+                    <div class="alert alert-warning mb-3" role="alert">
                         <p class="mb-0">
-                            All your funds will go to the standard user account without creating a masternode.
+                            All your funds will go to the provided account within 24 hours.
                         </p>
                     </div>
 
@@ -108,7 +85,7 @@
                         <code class="contractAddress">---</code>
                     </div>
 
-                    Set transaction data (yours <code><span class="tokenAmount">20,000</span> ADST</code> and public key are encoded in this data):
+                    Set transaction data (yours <code><span class="tokenAmount">20,000</span> ADST</code> and the account address are encoded in this data):
                     <div class="border border-secondary p-1 my-3">
                         <code id="transactionData">---</code>
                     </div>
@@ -125,28 +102,27 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="keyWarningModal" tabindex="-1" role="dialog"
+    <div class="modal fade" id="addressWarningModal" tabindex="-1" role="dialog"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="alert alert-danger" role="alert">
-                        <h4 class="alert-heading text-center">Signature verification faild</h4>
+                        <h4 class="alert-heading text-center">Account address verification faild</h4>
                         <hr>
                         <p>
-                            Signature of an empty string <span class="badge badge-secondary">SG</span> doesn't match the
-                            public key <span class="badge badge-secondary">PK</span>. Make sure you generate correct
-                            keys.
+                            CRC checksum of an account address <span class="badge badge-secondary">ADS</span> doesn't valid.
+                            Make sure you enter the correct address.
                         </p>
                         <p>
-                            <strong>Retrieve founds with an incorrect key will be impossible.</strong>
+                            <strong>Retrieve founds with an incorrect address will be impossible.</strong>
                         </p>
                         <p class="mb-0">
-                            <small>You can find more about keys on <a
-                                        href="https://github.com/adshares/ads/wiki/How-to-generate-ADS-keys"
+                            <small>You can find more about converting on <a
+                                        href="https://github.com/adshares/ads/wiki/How-to-convert-ADST-tokens"
                                         target="_blank"
                                         rel="noopener"
-                                        title="How to generate ADS keys?">this page</a>.
+                                        title="How to convert ADST tokens?">this page</a>.
                             </small>
                         </p>
                         <hr>

@@ -115,9 +115,9 @@
         </a>
 
         <ul class="nav my-2 my-lg-0">
-            {{--<li class="nav-item">--}}
-                {{--<a class="nav-link" href="/">Converter</a>--}}
-            {{--</li>--}}
+            <li class="nav-item">
+                <a class="nav-link" href="/">Converter</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="/status">Status</a>
             </li>

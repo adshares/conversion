@@ -13,18 +13,15 @@
 
 $app->get('/', function () use ($app) {
 
-    return redirect('/status');
-
-//    return view('converter', [
-//        'environment' => $app->environment(),
-//        'settings' => [
-//            'contractAddress' => env('ADS_CONTRACT_ADDRESS'),
-//            'transferMethod' => env('ADS_TRANSFER_METHOD'),
-//            'burnAddress' => env('ADS_BURN_ADDRESS'),
-//            'minTokenAmount' => (int)env('ADS_MIN_TOKEN_AMOUNT'),
-//            'minMasterNodeTokenAmount' => (int)env('ADS_MIN_MASTER_NODE_TOKEN_AMOUNT')
-//        ]
-//    ]);
+    return view('converter', [
+        'environment' => $app->environment(),
+        'settings' => [
+            'contractAddress' => env('ADS_CONTRACT_ADDRESS'),
+            'transferMethod' => env('ADS_TRANSFER_METHOD'),
+            'burnAddress' => env('ADS_BURN_ADDRESS'),
+            'minTokenAmount' => (int)env('ADS_MIN_TOKEN_AMOUNT')
+        ]
+    ]);
 });
 
 $app->get('/status', function () use ($app) {
