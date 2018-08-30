@@ -28,6 +28,16 @@ $app->get('/status', function () use ($app) {
 
     $db = app('db');
 
+    $conversions = $db->select(
+        'SELECT
+          log_date,
+          from_address,
+          amount,
+          ads_address,
+          status
+        FROM conversions
+        ORDER BY log_date DESC');
+
     $transactions = $db->select(
         'SELECT
           log_date,
@@ -39,6 +49,7 @@ $app->get('/status', function () use ($app) {
 
     return view('status', [
         'environment' => $app->environment(),
+        'conversions' => $conversions,
         'transactions' => $transactions
     ]);
 });
