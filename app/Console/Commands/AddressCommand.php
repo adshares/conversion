@@ -2,6 +2,7 @@
 
 namespace Adshares\Ads\Console\Commands;
 
+use Adshares\Ads\Console\Kernel;
 use Illuminate\Console\Command;
 
 class AddressCommand extends Command
@@ -44,7 +45,7 @@ class AddressCommand extends Command
                 '%s-%s-%04X',
                 $account->node_id,
                 $account->id,
-                self::crc16(sprintf('%s%s', $account->node_id, $account->id))
+                Kernel::crc16(sprintf('%s%s', $account->node_id, $account->id))
             );
 
             $db->update(
@@ -61,17 +62,4 @@ class AddressCommand extends Command
         $this->info(sprintf('Generated %d addresses', count($accounts)));
     }
 
-
-    private static function crc16($hexChars)
-    {
-        $chars = hex2bin($hexChars);
-        $crc = 0x1D0F;
-
-        for ($i = 0; $i < strlen($chars); $i ++) {
-            $x = ($crc >> 8) ^ ord($chars[$i]);
-            $x ^= $x >> 4;
-            $crc = (($crc << 8) ^ (($x << 12)) ^ (($x << 5)) ^ ($x)) & 0xFFFF;
-        }
-        return $crc;
-    }
 }

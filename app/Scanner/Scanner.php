@@ -2,6 +2,7 @@
 
 namespace Adshares\Ads\Scanner;
 
+use Adshares\Ads\Console\Kernel;
 use Illuminate\Database\DatabaseManager;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -273,19 +274,20 @@ class Scanner implements LoggerAwareInterface
 
     /**
      * @param \stdClass $transaction
-     * @return bool
+     * @return int
      */
-    private function extractConversionData(\stdClass $transaction): bool
+    private function extractConversionData(\stdClass $transaction): int
     {
         if (self::sanitizeHex($transaction->to) !== self::sanitizeHex($this->contractAddress)) {
 
-            $this->logger->debug(sprintf(
+            $transaction->info = sprintf(
                 'Incorrect contract address; got %s, should be %s',
                 $transaction->to,
                 $this->contractAddress
-            ));
+            );
+            $this->logger->debug($transaction->info);
 
-            return false;
+            return -1;
         }
 
         $input = $transaction->input;
@@ -293,61 +295,92 @@ class Scanner implements LoggerAwareInterface
 
         $transferMethod = substr($input, 0, strlen($this->transferMethod));
         if (self::sanitizeHex($transferMethod) !== self::sanitizeHex($this->transferMethod)) {
-            $this->logger->debug(sprintf(
+            $transaction->info = sprintf(
                 'Incorrect transfer method; got %s, should be %s.',
                 $transferMethod,
                 $this->transferMethod
-            ));
+            );
+            $this->logger->debug($transaction->info);
 
-            return false;
+            return -1;
         }
 
         $data = substr($input, strlen($this->transferMethod));
         $data = str_split($data, 64);
 
-        if (3 !== count($data)) {
-            $this->logger->debug(sprintf(
-                'Incorrect number of parameters; got %d, should be 3.',
+        if (2 > count($data)) {
+            $transaction->info = sprintf(
+                'Incorrect number of parameters; got %d, should be at least 2.',
                 count($data)
-            ));
+            );
+            $this->logger->debug($transaction->info);
 
-            return false;
+            return -1;
         }
 
         if (self::sanitizeHex($data[0]) !== self::sanitizeHex($this->burnAddress)) {
-            $this->logger->debug(sprintf(
+            $transaction->info = sprintf(
                 'Incorrect burn address; got %s, should be %s.',
                 '0x' . $data[0],
                 $this->burnAddress
-            ));
+            );
+            $this->logger->debug($transaction->info);
 
-            return false;
+            return -1;
         }
 
         $burnAmountData = '0x' . preg_replace('/^0+/', '', $data[1]);
         if (1 > ($burnAmount = (int)hexdec($burnAmountData))) {
-            $this->logger->debug(sprintf(
+            $transaction->info = sprintf(
                 'Incorrect burn amount; got %d [%s], should be more then 1.',
                 $burnAmount,
                 $burnAmountData
-            ));
+            );
+            $this->logger->debug($transaction->info);
 
-            return false;
+            return 10;
         }
 
-        if (64 !== strlen($data[2])) {
-            $this->logger->debug(sprintf(
-                'Incorrect conversion key; got %s.',
-                $data[1]
-            ));
+        if (3 > count($data)) {
+            $transaction->info = 'Empty ADS account address.';
+            $this->logger->debug($transaction->info);
 
-            return false;
+            return 11;
+        }
+
+        $addressFormat = "/^([0-9a-fA-F]{4})-([0-9a-fA-F]{8})-([0-9a-fA-F]{4})$/";
+        $matches = [];
+
+        if (!preg_match($addressFormat, $data[2], $matches)) {
+            $transaction->info = sprintf(
+                'Incorrect ADS account address; got %s.',
+                $data[2]
+            );
+            $this->logger->debug($transaction->info);
+
+            return 12;
+        }
+
+        $crc = sprintf(
+            '%04X',
+            Kernel::crc16(sprintf('%s%s', $matches[1], $matches[2]))
+        );
+
+        if ($crc !== strtoupper($matches[3])) {
+            $transaction->info = sprintf(
+                'Incorrect ADS account CRC checksum; got %s, should be %s.',
+                $matches[3],
+                $crc
+            );
+            $this->logger->debug($transaction->info);
+
+            return 13;
         }
 
         $transaction->burnAmount = $burnAmount;
-        $transaction->conversionKey = strtoupper($data[2]);
+        $transaction->adsAddress = strtoupper($data[2]);
 
-        return true;
+        return 0;
     }
 
     /**
@@ -357,16 +390,22 @@ class Scanner implements LoggerAwareInterface
     private function saveTransaction(\stdClass $transaction): bool
     {
         return $this->db->insert(
-            'INSERT INTO transactions (
+            'INSERT INTO conversions (
+                tx_hash,
                 from_address,
                 log_date,
                 amount,
-                public_key
-            ) VALUES (?, ?, ?, ?)', [
+                ads_address,
+                status,
+                info
+            ) VALUES (?, ?, ?, ?, ?, ?, ?)', [
+            $transaction->txHash,
             $transaction->from,
             new \DateTime('@' . $transaction->timestamp),
             $transaction->burnAmount,
-            $transaction->conversionKey
+            $transaction->adsAddress,
+            $transaction->status,
+            $transaction->info
         ]);
     }
 
@@ -395,7 +434,8 @@ class Scanner implements LoggerAwareInterface
                     throw new \RuntimeException(sprintf('Cannot fetch transaction %s', $log->transactionHash));
                 }
 
-                if (!$this->extractConversionData($transaction)) {
+                $transaction->status = $this->extractConversionData($transaction);
+                if ($transaction->status < 0) {
                     $this->logger->warning(sprintf('Cannot convert transaction %s', $log->transactionHash));
                     continue;
                 }

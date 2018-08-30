@@ -19,7 +19,8 @@ class CreateConversionsTable extends Migration
             $table->string('from_address');
             $table->integer('amount');
             $table->string('ads_address');
-            $table->integer('status')->default(0);
+            $table->integer('status');
+            $table->string('info')->nullable();
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
