@@ -353,7 +353,7 @@ class Scanner implements LoggerAwareInterface
 
         if (!preg_match($addressFormat, $data[2], $matches)) {
             $transaction->info = sprintf(
-                'Incorrect ADS account address; got %s.',
+                'Incorrect the ADS account address; got %s.',
                 $data[2]
             );
             $this->logger->debug($transaction->info);
@@ -368,7 +368,7 @@ class Scanner implements LoggerAwareInterface
 
         if ($crc !== strtoupper($matches[3])) {
             $transaction->info = sprintf(
-                'Incorrect ADS account CRC checksum; got %s, should be %s.',
+                'Incorrect the ADS account checksum; got %s, should be %s.',
                 $matches[3],
                 $crc
             );

@@ -2,6 +2,7 @@
 @section('title', 'Conversion status')
 @section('styles')
     <style>
+        .help {cursor: help;}
         table td.date {
             white-space: nowrap;
         }
@@ -48,16 +49,40 @@
                                 <a href="https://etherscan.io/address/{{ $transaction->from_address  }}"
                                    title="{{ $transaction->from_address  }}"
                                    rel="noopener"
-                                   target="_blank"><pre>{{ substr($transaction->from_address, 0, 10) }}…</pre></a>
+                                   target="_blank"><pre>{{ $transaction->from_address }}</pre></a>
                             </td>
                             <td class="text-right pr-4"><pre>{{ number_format($transaction->amount) }}</pre></td>
                             <td>
+                                @if ($transaction->status <= 1)
                                 <a href="https://operator.e11.click/blockexplorer/accounts/{{ $transaction->ads_address  }}"
                                    title="{{ $transaction->ads_address  }}"
                                    rel="noopener"
-                                   target="_blank"><pre>{{ $transaction->ads_address }}…</pre></a>
+                                   target="_blank"><pre>{{ $transaction->ads_address }}</pre></a>
+                                @else
+                                    <pre>{{ $transaction->ads_address }}</pre>
+                                @endif
                             </td>
-                            <td><pre>{{ $transaction->status }}</pre></td>
+                            <td class="text-center">
+                                @if ($transaction->status == 0)
+                                    <i class="fas fa-clock text-primary help"
+                                       data-toggle="tooltip"
+                                       data-placement="left"
+                                       title="Conversion in progress…"></i>
+                                @elseif ($transaction->status == 1)
+                                    <a href="https://operator.e11.click/blockexplorer/transactions/{{ $transaction->info  }}"
+                                       data-toggle="tooltip"
+                                       data-placement="left"
+                                       title="All right! Transaction id: {{ $transaction->info  }}"
+                                       rel="noopener"
+                                       target="_blank"><i class="fas fa-check-circle text-success"></i></a>
+                                @else
+                                   <i class="fas fa-exclamation-triangle text-danger help"
+                                      data-toggle="tooltip"
+                                      data-placement="left"
+                                      title="{{ $transaction->info }}"></i>
+                                @endif
+
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -84,7 +109,7 @@
                                 <a href="https://etherscan.io/address/{{ $transaction->from_address  }}"
                                    title="{{ $transaction->from_address  }}"
                                    rel="noopener"
-                                   target="_blank"><pre>{{ substr($transaction->from_address, 0, 10) }}…</pre></a>
+                                   target="_blank"><pre>{{ $transaction->from_address }}</pre></a>
                             </td>
                             <td class="text-right pr-4"><pre>{{ number_format($transaction->amount) }}</pre></td>
                             <td><pre>{{ $transaction->public_key }}</pre></td>
@@ -95,4 +120,12 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      })
+    </script>
 @endsection

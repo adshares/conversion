@@ -34,7 +34,8 @@ $app->get('/status', function () use ($app) {
           from_address,
           amount,
           ads_address,
-          status
+          status,
+          info
         FROM conversions
         ORDER BY log_date DESC');
 
