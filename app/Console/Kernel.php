@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'Adshares\Ads\Console\Commands\ScanCommand',
+        'Adshares\Ads\Console\Commands\EthScanCommand',
+        'Adshares\Ads\Console\Commands\AdsScanCommand',
         'Adshares\Ads\Console\Commands\AddressCommand'
     ];
 

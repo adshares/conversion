@@ -2,19 +2,18 @@
 
 namespace Adshares\Ads\Console\Commands;
 
-use Log;
-use Adshares\Ads\Scanner\Scanner;
+use Adshares\Ads\Scanner\EthScanner;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 
-class ScanCommand extends Command
+class EthScanCommand extends Command
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'scan';
+    protected $name = 'scan:eth';
 
     /**
      * The console command description.
@@ -28,22 +27,22 @@ class ScanCommand extends Command
      *
      * @return void
      */
-    public function fire()
+    public function handle()
     {
         $url = $this->input->getOption('url');
         if (null === $url) {
-            $url = env('ADS_NODE_URL');
+            $url = env('ADST_NODE_URL');
         }
 
-        $this->info(sprintf('Scanner starting on %s', $url));
+        $this->info(sprintf('EthScanner starting on %s', $url));
 
-        $scanner = new Scanner($url, app('db'));
+        $scanner = new EthScanner($url, app('db'));
 
-        $scanner->setStartBlock(env('ADS_START_BLOCK'));
-        $scanner->setTransferTopic(env('ADS_TRANSFER_TOPIC'));
-        $scanner->setTransferMethod(env('ADS_TRANSFER_METHOD'));
-        $scanner->setContractAddress(env('ADS_CONTRACT_ADDRESS'));
-        $scanner->setBurnAddress(env('ADS_BURN_ADDRESS'));
+        $scanner->setStartBlock(env('ADST_START_BLOCK'));
+        $scanner->setTransferTopic(env('ADST_TRANSFER_TOPIC'));
+        $scanner->setTransferMethod(env('ADST_TRANSFER_METHOD'));
+        $scanner->setContractAddress(env('ADST_CONTRACT_ADDRESS'));
+        $scanner->setBurnAddress(env('ADST_BURN_ADDRESS'));
         $scanner->setLogger(app('log'));
 
         $count = $scanner->scan();

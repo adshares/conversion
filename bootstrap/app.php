@@ -1,8 +1,12 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
-Dotenv::load(__DIR__ . '/../');
+try {
+    (new Dotenv\Dotenv(__DIR__.'/../'))->load();
+} catch (Dotenv\Exception\InvalidPathException $e) {
+    //
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +20,7 @@ Dotenv::load(__DIR__ . '/../');
 */
 
 $app = new Laravel\Lumen\Application(
-    realpath(__DIR__ . '/../')
+    realpath(__DIR__.'/../')
 );
 
 // $app->withFacades();
@@ -56,15 +60,11 @@ $app->singleton(
 */
 
 // $app->middleware([
-//     // Illuminate\Cookie\Middleware\EncryptCookies::class,
-//     // Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-//     // Illuminate\Session\Middleware\StartSession::class,
-//     // Illuminate\View\Middleware\ShareErrorsFromSession::class,
-//     // Laravel\Lumen\Http\Middleware\VerifyCsrfToken::class,
+//    App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
 // $app->routeMiddleware([
-
+//     'auth' => App\Http\Middleware\Authenticate::class,
 // ]);
 
 /*
@@ -78,8 +78,9 @@ $app->singleton(
 |
 */
 
-//$app->register(Adshares\Ads\Providers\AppServiceProvider::class);
-//$app->register(Adshares\Ads\Providers\EventServiceProvider::class);
+// $app->register(App\Providers\AppServiceProvider::class);
+// $app->register(App\Providers\AuthServiceProvider::class);
+// $app->register(App\Providers\EventServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -92,8 +93,10 @@ $app->singleton(
 |
 */
 
-$app->group(['namespace' => 'Adshares\Ads\Http\Controllers'], function ($app) {
-    require __DIR__ . '/../app/Http/routes.php';
+$app->router->group([
+    'namespace' => 'App\Http\Controllers',
+], function ($router) {
+    require __DIR__.'/../routes/web.php';
 });
 
 return $app;

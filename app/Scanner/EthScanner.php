@@ -8,7 +8,7 @@ use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Web3\Web3;
 
-class Scanner implements LoggerAwareInterface
+class EthScanner implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
@@ -53,7 +53,7 @@ class Scanner implements LoggerAwareInterface
     private $blockCache = [];
 
     /**
-     * Scanner constructor.
+     * EthScanner constructor.
      * @param string $url
      * @param DatabaseManager $db
      */
@@ -278,6 +278,10 @@ class Scanner implements LoggerAwareInterface
      */
     private function extractConversionData(\stdClass $transaction): int
     {
+        $transaction->info = null;
+        $transaction->burnAmount = 0;
+        $transaction->adsAddress = '---';
+
         if (self::sanitizeHex($transaction->to) !== self::sanitizeHex($this->contractAddress)) {
 
             $transaction->info = sprintf(
@@ -287,7 +291,7 @@ class Scanner implements LoggerAwareInterface
             );
             $this->logger->debug($transaction->info);
 
-            return -1;
+            return 2;
         }
 
         $input = $transaction->input;
@@ -378,7 +382,7 @@ class Scanner implements LoggerAwareInterface
         }
 
         $transaction->burnAmount = $burnAmount;
-        $transaction->adsAddress = sprinf(
+        $transaction->adsAddress = sprintf(
             '%s-%s-%s',
             strtoupper($matches[1]),
             strtoupper($matches[2]),
@@ -404,7 +408,7 @@ class Scanner implements LoggerAwareInterface
                 status,
                 info
             ) VALUES (?, ?, ?, ?, ?, ?, ?)', [
-            $transaction->txHash,
+            $transaction->hash,
             $transaction->from,
             new \DateTime('@' . $transaction->timestamp),
             $transaction->burnAmount,

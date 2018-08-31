@@ -75,6 +75,11 @@
                                        title="All right! Transaction id: {{ $transaction->info  }}"
                                        rel="noopener"
                                        target="_blank"><i class="fas fa-check-circle text-success"></i></a>
+                                @elseif ($transaction->status == 2)
+                                    <i class="fas fa-exclamation-triangle text-warning help"
+                                       data-toggle="tooltip"
+                                       data-placement="left"
+                                       title="A smart contract has been detected. Manual checking is required."></i>
                                 @else
                                    <i class="fas fa-exclamation-triangle text-danger help"
                                       data-toggle="tooltip"

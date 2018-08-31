@@ -11,20 +11,19 @@
 |
 */
 
-$app->get('/', function () use ($app) {
+$router->get('/', function () use ($router) {
 
     return view('converter', [
-        'environment' => $app->environment(),
         'settings' => [
-            'contractAddress' => env('ADS_CONTRACT_ADDRESS'),
-            'transferMethod' => env('ADS_TRANSFER_METHOD'),
-            'burnAddress' => env('ADS_BURN_ADDRESS'),
-            'minTokenAmount' => (int)env('ADS_MIN_TOKEN_AMOUNT')
+            'contractAddress' => env('ADST_CONTRACT_ADDRESS'),
+            'transferMethod' => env('ADST_TRANSFER_METHOD'),
+            'burnAddress' => env('ADST_BURN_ADDRESS'),
+            'minTokenAmount' => (int)env('ADST_MIN_TOKEN_AMOUNT')
         ]
     ]);
 });
 
-$app->get('/status', function () use ($app) {
+$router->get('/status', function () use ($router) {
 
     $db = app('db');
 
@@ -49,13 +48,12 @@ $app->get('/status', function () use ($app) {
         ORDER BY log_date DESC');
 
     return view('status', [
-        'environment' => $app->environment(),
         'conversions' => $conversions,
         'transactions' => $transactions
     ]);
 });
 
-$app->get('/genesis', function () use ($app) {
+$router->get('/genesis', function () use ($router) {
 
     $db = app('db');
 
@@ -79,7 +77,6 @@ $app->get('/genesis', function () use ($app) {
         ORDER BY node_id, id ASC');
 
     return view('genesis', [
-        'environment' => $app->environment(),
         'nodes' => $nodes,
         'accounts' => $accounts
     ]);

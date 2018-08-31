@@ -38,7 +38,7 @@ See https://lumen.laravel.com/docs/5.1#installation
 
 ## Configuration
 
-Converter parameter with *ADS_* prefix:
+Converter parameter with *ADST_* prefix:
 
 | Parameter                      | Default                                    |
 | ------------------------------ | :----------------------------------------- | 
