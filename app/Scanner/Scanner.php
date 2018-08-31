@@ -348,7 +348,7 @@ class Scanner implements LoggerAwareInterface
             return 11;
         }
 
-        $addressFormat = "/^([0-9a-fA-F]{4})-([0-9a-fA-F]{8})-([0-9a-fA-F]{4})$/";
+        $addressFormat = "/^([0-9a-fA-F]{4})([0-9a-fA-F]{8})([0-9a-fA-F]{4})$/";
         $matches = [];
 
         if (!preg_match($addressFormat, $data[2], $matches)) {
@@ -378,7 +378,12 @@ class Scanner implements LoggerAwareInterface
         }
 
         $transaction->burnAmount = $burnAmount;
-        $transaction->adsAddress = strtoupper($data[2]);
+        $transaction->adsAddress = sprinf(
+            '%s-%s-%s',
+            strtoupper($matches[1]),
+            strtoupper($matches[2]),
+            strtoupper($matches[3])
+        );
 
         return 0;
     }
