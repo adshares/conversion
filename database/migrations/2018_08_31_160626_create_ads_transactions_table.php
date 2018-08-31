@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTransactionsTable extends Migration
+class CreateAdsTransactionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +13,12 @@ class CreateTransactionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
-            $table->increments('id');
-            $table->dateTime('log_date');
-            $table->string('from_address');
-            $table->bigInteger('amount');
-            $table->string('public_key');
+        Schema::create('ads_transactions', function (Blueprint $table) {
+            $table->string('id');
+            $table->dateTime('time');
+            $table->string('target_address');
+            $table->integer('amount');
+            $table->string('message');
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
@@ -29,6 +30,6 @@ class CreateTransactionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('transactions');
+        Schema::dropIfExists('ads_transactions');
     }
 }
