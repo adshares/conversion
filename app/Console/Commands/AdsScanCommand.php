@@ -38,18 +38,21 @@ class AdsScanCommand extends Command
 
         $scanner = new AdsScanner(
             $host,
-            env('ADS_NODE_PORT'),
+            (int)env('ADS_NODE_PORT'),
             env('ADS_ADDRESS'),
             env('ADS_SECRET'),
             app('db'),
             app('log')
         );
 
-        $scanner->setStartBlock(env('ADS_START_BLOCK'));
+        $scanner->setTreasuryAddress(env('ADS_TREASURY_ADDRESS'));
+        $scanner->setStartBlock((int)env('ADS_START_BLOCK'));
 
         $count = $scanner->scan();
-
         $this->info(sprintf('Found %d transactions', $count));
+
+        $count = $scanner->pair();
+        $this->info(sprintf('Paired %d transactions', $count));
     }
 
     /**
