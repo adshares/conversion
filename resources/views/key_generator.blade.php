@@ -5,7 +5,14 @@
         .help {
             cursor: help;
         }
-
+        h1 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
         @media (min-width: 576px) {
             .modal-dialog {
                 max-width: 540px;
