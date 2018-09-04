@@ -88,12 +88,12 @@ $(document).ready(function () {
             let seed = mnemonicToSeedHex(mnemonic);
             let {publicKey, secretKey} = generateKeyPair(seed);
             $('#seed').text(seed);
-            $('#secretKey').text(secretKey);
-            $('#publicKey').text(publicKey);
+            $('#secretKey').text(secretKey.toUpperCase());
+            $('#publicKey').text(publicKey.toUpperCase());
             // key used to sign is concatenation of secret and public key
             let key = secretKey + publicKey;
             let signature = nacl.sign.detached(new Uint8Array(0), key.hexToByte()).byteToHex();
-            $('#signature').text(signature);
+            $('#signature').text(signature.toUpperCase());
             $('#keygenModal').modal();
         } else {
             mnemonicTextArea.removeClass('is-valid').addClass('is-invalid');

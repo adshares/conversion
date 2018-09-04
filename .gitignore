@@ -4,6 +4,7 @@
 # packages
 vendor/
 bin/vendor/
+node_modules/
 
 # Laravel 5 & Lumen specific
 public/storage
