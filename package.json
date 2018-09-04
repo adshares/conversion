@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "scripts": {
+    "webpack": "webpack --config=webpack.config.js --mode=production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "adshares",
+  "bugs": {
+    "url": "https://github.com/adshares/conversion/issues"
+  },
+  "homepage": "https://github.com/adshares/conversion#readme",
+  "dependencies": {
+    "bip39": "^2.5.0",
+    "ed25519-hd-key": "^1.0.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0"
+  }
+}

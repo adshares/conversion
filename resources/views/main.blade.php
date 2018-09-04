@@ -121,6 +121,9 @@
                 <a class="nav-link" href="/">Converter</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="/key">Key generator</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="/status">Status</a>
             </li>
             <li class="nav-item">
