@@ -23,6 +23,10 @@ $router->get('/', function () use ($router) {
     ]);
 });
 
+$router->get('/key', function () use ($router) {
+    return view('key_generator');
+});
+
 $router->get('/status', function () use ($router) {
 
     $db = app('db');
