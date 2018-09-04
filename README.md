@@ -12,6 +12,18 @@ composer install
 cp .env.example .env
 ```
 
+### Rebuild key-generator script [only if needed]
+
+Bundled key generator script is present in `public/js/key-generator.js`.
+It is generated from `resources/assets/js/key-generator.js` file using Node and Webpack.
+
+If You need to rebuild script, run following commands:
+```
+npm install
+npm run webpack
+```
+Tested with node v8.11.3 and npm 6.2.0.
+
 ### Nginx
 ```
 tee /etc/nginx/sites-enabled/conversion <<'ADSHARES'
