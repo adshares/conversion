@@ -4,6 +4,7 @@ namespace Adshares\Ads\Console\Commands;
 
 use Adshares\Ads\Console\Kernel;
 use Illuminate\Console\Command;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class NotifyCommand extends Command
 {
@@ -59,7 +60,7 @@ class NotifyCommand extends Command
         }
 
         $title = sprintf(
-            'ADS conversion - %d waiting & %d errors',
+            'TEST !!! ADS conversion - %d waiting & %d errors',
             count($waiting),
             count($errors)
         );
@@ -78,7 +79,7 @@ class NotifyCommand extends Command
                 'ETH Address',
                 'Amount',
                 'ADS Address',
-                str_repeat('=',96)
+                str_repeat('=', 96)
             );
             $transfers = '';
 
@@ -116,7 +117,7 @@ class NotifyCommand extends Command
                 'ETH Address',
                 'Amount',
                 'ADS Address',
-                str_repeat('=',96)
+                str_repeat('=', 96)
             );
 
             foreach ($errors as $conversion) {
@@ -127,7 +128,7 @@ class NotifyCommand extends Command
                     $conversion->amount,
                     $conversion->ads_address,
                     implode("\n     ", str_split($conversion->info, 91)),
-                    str_repeat('-',96)
+                    str_repeat('-', 96)
                 );
             }
 
@@ -142,6 +143,39 @@ class NotifyCommand extends Command
         );
 
         app('log')->debug($message);
+        $this->info('Sending message...');
+
+        try {
+            $this->sendMail($title, $message);
+            $this->info('Message sent');
+        } catch (\PHPMailer\PHPMailer\Exception $e) {
+            app('log')->error(sprintf('Sending message failed: %s', $e->getMessage()));
+            $this->info('Sending message failed');
+        }
+    }
+
+    /**
+     * @param $title
+     * @param $message
+     * @return int
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
+    private function sendMail($title, $message): int
+    {
+        $mail = new PHPMailer(true);
+
+        $mail->isSMTP();
+        $mail->Host = env('SMTP_HOST');
+        $mail->Port = env('SMTP_PORT');
+        $mail->SMTPSecure = env('SMTP_SECURITY');
+
+        $mail->setFrom(env('SMTP_FROM'));
+        $mail->addAddress(env('NOTIFY_TO'));
+
+        $mail->Subject = $title;
+        $mail->Body = $message;
+
+        return $mail->send();
     }
 
 }

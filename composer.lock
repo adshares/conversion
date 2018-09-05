@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c625aac8a93441f2f0178f7debcc8c82",
+    "content-hash": "e4c686575457333037d17dd65994a4a1",
     "packages": [
         {
             "name": "adshares/ads-client",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/adshares/ads-php-client.git",
-                "reference": "b6245e8261bd7ce165022d257fe8c5ed55bb51ed"
+                "reference": "76041cd664232a5720b78e4000b79e9b054d6bf2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adshares/ads-php-client/zipball/b6245e8261bd7ce165022d257fe8c5ed55bb51ed",
-                "reference": "b6245e8261bd7ce165022d257fe8c5ed55bb51ed",
+                "url": "https://api.github.com/repos/adshares/ads-php-client/zipball/76041cd664232a5720b78e4000b79e9b054d6bf2",
+                "reference": "76041cd664232a5720b78e4000b79e9b054d6bf2",
                 "shasum": ""
             },
             "require": {
@@ -69,7 +69,7 @@
                 "esc",
                 "php"
             ],
-            "time": "2018-08-22T09:38:49+00:00"
+            "time": "2018-08-26T21:29:03+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -370,16 +370,16 @@
         },
         {
             "name": "illuminate/auth",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/auth.git",
-                "reference": "dbfd4994c61d7cfc68eb206450f10e5d33a3c833"
+                "reference": "bdfa59753e514300821b799e5b8586a0fb92487b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/auth/zipball/dbfd4994c61d7cfc68eb206450f10e5d33a3c833",
-                "reference": "dbfd4994c61d7cfc68eb206450f10e5d33a3c833",
+                "url": "https://api.github.com/repos/illuminate/auth/zipball/bdfa59753e514300821b799e5b8586a0fb92487b",
+                "reference": "bdfa59753e514300821b799e5b8586a0fb92487b",
                 "shasum": ""
             },
             "require": {
@@ -417,11 +417,11 @@
             ],
             "description": "The Illuminate Auth package.",
             "homepage": "https://laravel.com",
-            "time": "2018-08-14T12:58:42+00:00"
+            "time": "2018-09-02T21:09:00+00:00"
         },
         {
             "name": "illuminate/broadcasting",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/broadcasting.git",
@@ -471,7 +471,7 @@
         },
         {
             "name": "illuminate/bus",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/bus.git",
@@ -516,7 +516,7 @@
         },
         {
             "name": "illuminate/cache",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/cache.git",
@@ -565,7 +565,7 @@
         },
         {
             "name": "illuminate/config",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/config.git",
@@ -609,16 +609,16 @@
         },
         {
             "name": "illuminate/console",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/console.git",
-                "reference": "3d5f34a6a06f33940a6e1ef05d663456da108bbd"
+                "reference": "2f4d3640d4d72054c45bc3b2133f1f64ce6ce40e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/console/zipball/3d5f34a6a06f33940a6e1ef05d663456da108bbd",
-                "reference": "3d5f34a6a06f33940a6e1ef05d663456da108bbd",
+                "url": "https://api.github.com/repos/illuminate/console/zipball/2f4d3640d4d72054c45bc3b2133f1f64ce6ce40e",
+                "reference": "2f4d3640d4d72054c45bc3b2133f1f64ce6ce40e",
                 "shasum": ""
             },
             "require": {
@@ -655,11 +655,11 @@
             ],
             "description": "The Illuminate Console package.",
             "homepage": "https://laravel.com",
-            "time": "2018-08-16T21:28:32+00:00"
+            "time": "2018-09-03T13:49:38+00:00"
         },
         {
             "name": "illuminate/container",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -703,7 +703,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -747,16 +747,16 @@
         },
         {
             "name": "illuminate/database",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/database.git",
-                "reference": "580a19b3c9bdb6ff1fa8c81a61dd3bc46af86c5c"
+                "reference": "3ced59eded242a3d321c284b09081ea2b96fc108"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/database/zipball/580a19b3c9bdb6ff1fa8c81a61dd3bc46af86c5c",
-                "reference": "580a19b3c9bdb6ff1fa8c81a61dd3bc46af86c5c",
+                "url": "https://api.github.com/repos/illuminate/database/zipball/3ced59eded242a3d321c284b09081ea2b96fc108",
+                "reference": "3ced59eded242a3d321c284b09081ea2b96fc108",
                 "shasum": ""
             },
             "require": {
@@ -802,11 +802,11 @@
                 "orm",
                 "sql"
             ],
-            "time": "2018-08-26T13:56:10+00:00"
+            "time": "2018-09-04T13:11:31+00:00"
         },
         {
             "name": "illuminate/encryption",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/encryption.git",
@@ -852,7 +852,7 @@
         },
         {
             "name": "illuminate/events",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/events.git",
@@ -897,7 +897,7 @@
         },
         {
             "name": "illuminate/filesystem",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/filesystem.git",
@@ -949,7 +949,7 @@
         },
         {
             "name": "illuminate/hashing",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/hashing.git",
@@ -993,7 +993,7 @@
         },
         {
             "name": "illuminate/http",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/http.git",
@@ -1039,7 +1039,7 @@
         },
         {
             "name": "illuminate/log",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/log.git",
@@ -1084,7 +1084,7 @@
         },
         {
             "name": "illuminate/pagination",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/pagination.git",
@@ -1128,7 +1128,7 @@
         },
         {
             "name": "illuminate/pipeline",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/pipeline.git",
@@ -1172,7 +1172,7 @@
         },
         {
             "name": "illuminate/queue",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/queue.git",
@@ -1229,7 +1229,7 @@
         },
         {
             "name": "illuminate/session",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/session.git",
@@ -1279,7 +1279,7 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
@@ -1337,7 +1337,7 @@
         },
         {
             "name": "illuminate/translation",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/translation.git",
@@ -1382,7 +1382,7 @@
         },
         {
             "name": "illuminate/validation",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/validation.git",
@@ -1432,16 +1432,16 @@
         },
         {
             "name": "illuminate/view",
-            "version": "v5.6.35",
+            "version": "v5.6.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/view.git",
-                "reference": "8d4e1c4d8c133eaca33c94ee35b7c0d2ef1dc66f"
+                "reference": "87645c175810ffe2969318d004138eb786b99dd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/view/zipball/8d4e1c4d8c133eaca33c94ee35b7c0d2ef1dc66f",
-                "reference": "8d4e1c4d8c133eaca33c94ee35b7c0d2ef1dc66f",
+                "url": "https://api.github.com/repos/illuminate/view/zipball/87645c175810ffe2969318d004138eb786b99dd9",
+                "reference": "87645c175810ffe2969318d004138eb786b99dd9",
                 "shasum": ""
             },
             "require": {
@@ -1476,7 +1476,7 @@
             ],
             "description": "The Illuminate View package.",
             "homepage": "https://laravel.com",
-            "time": "2018-07-19T23:06:53+00:00"
+            "time": "2018-09-02T11:28:46+00:00"
         },
         {
             "name": "kornrunner/keccak",
@@ -1785,6 +1785,72 @@
                 "routing"
             ],
             "time": "2018-02-13T20:26:39+00:00"
+        },
+        {
+            "name": "phpmailer/phpmailer",
+            "version": "v6.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPMailer/PHPMailer.git",
+                "reference": "cb3ea134d4d3729e7857737d5f320cce9caf4d32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/cb3ea134d4d3729e7857737d5f320cce9caf4d32",
+                "reference": "cb3ea134d4d3729e7857737d5f320cce9caf4d32",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-filter": "*",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "doctrine/annotations": "1.2.*",
+                "friendsofphp/php-cs-fixer": "^2.2",
+                "phpdocumentor/phpdocumentor": "2.*",
+                "phpunit/phpunit": "^4.8 || ^5.7",
+                "zendframework/zend-eventmanager": "3.0.*",
+                "zendframework/zend-i18n": "2.7.3",
+                "zendframework/zend-serializer": "2.7.*"
+            },
+            "suggest": {
+                "ext-mbstring": "Needed to send email in multibyte encoding charset",
+                "hayageek/oauth2-yahoo": "Needed for Yahoo XOAUTH2 authentication",
+                "league/oauth2-google": "Needed for Google XOAUTH2 authentication",
+                "psr/log": "For optional PSR-3 debug logging",
+                "stevenmaguire/oauth2-microsoft": "Needed for Microsoft XOAUTH2 authentication",
+                "symfony/polyfill-mbstring": "To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPMailer\\PHPMailer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Jim Jagielski",
+                    "email": "jimjag@gmail.com"
+                },
+                {
+                    "name": "Marcus Bointon",
+                    "email": "phpmailer@synchromedia.co.uk"
+                },
+                {
+                    "name": "Andy Prevost",
+                    "email": "codeworxtech@users.sourceforge.net"
+                },
+                {
+                    "name": "Brent R. Matzelle"
+                }
+            ],
+            "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
+            "time": "2018-03-27T13:49:45+00:00"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -3612,16 +3678,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.3.2",
+            "version": "7.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "34705f81bddc3f505b9599a2ef96e2b4315ba9b8"
+                "reference": "0356331bf62896dc56e3a15030b23b73f38b2935"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/34705f81bddc3f505b9599a2ef96e2b4315ba9b8",
-                "reference": "34705f81bddc3f505b9599a2ef96e2b4315ba9b8",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0356331bf62896dc56e3a15030b23b73f38b2935",
+                "reference": "0356331bf62896dc56e3a15030b23b73f38b2935",
                 "shasum": ""
             },
             "require": {
@@ -3692,7 +3758,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-08-22T06:39:21+00:00"
+            "time": "2018-09-05T09:58:53+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
