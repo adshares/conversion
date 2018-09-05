@@ -67,6 +67,10 @@ class NotifyCommand extends Command
         $this->info($title);
         app('log')->info($title);
 
+        if (0 === count($waiting) && 0 === (count($errors))) {
+            return;
+        }
+
         $waitingMessage = '';
         $commandMessage = '';
         $errorsMessage = '';
