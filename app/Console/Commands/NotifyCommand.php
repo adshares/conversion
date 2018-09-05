@@ -38,6 +38,7 @@ class NotifyCommand extends Command
         $conversions = $db->select(
             'SELECT
               log_date,
+              tx_hash,
               from_address,
               amount,
               ads_address,
@@ -97,9 +98,10 @@ class NotifyCommand extends Command
 
                 );
                 $transfers .= sprintf(
-                    '; echo \'{"run":"send_one","address":"%s","amount":%d}\'',
+                    '; echo \'{"run":"send_one","address":"%s","amount":%d,"message":"%s"}\'',
                     $conversion->ads_address,
-                    $conversion->amount
+                    $conversion->amount,
+                    str_replace('0X', '', strtoupper($conversion->tx_hash))
                 );
             }
 
