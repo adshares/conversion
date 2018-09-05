@@ -60,7 +60,7 @@ class NotifyCommand extends Command
         }
 
         $title = sprintf(
-            'TEST !!! ADS conversion - %d waiting & %d errors',
+            'ADS conversion - %d waiting & %d errors',
             count($waiting),
             count($errors)
         );
