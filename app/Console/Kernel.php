@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         'Adshares\Ads\Console\Commands\EthScanCommand',
         'Adshares\Ads\Console\Commands\AdsScanCommand',
-        'Adshares\Ads\Console\Commands\AddressCommand'
+        'Adshares\Ads\Console\Commands\AddressCommand',
+        'Adshares\Ads\Console\Commands\NotifyCommand'
     ];
 
     /**

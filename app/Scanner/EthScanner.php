@@ -280,7 +280,7 @@ class EthScanner implements LoggerAwareInterface
     {
         $transaction->info = null;
         $transaction->burnAmount = 0;
-        $transaction->adsAddress = '---';
+        $transaction->adsAddress = 'N/A';
 
         if (self::sanitizeHex($transaction->to) !== self::sanitizeHex($this->contractAddress)) {
 
