@@ -172,8 +172,10 @@ class NotifyCommand extends Command
         $mail->setFrom(env('SMTP_FROM'));
         $mail->addAddress(env('NOTIFY_TO'));
 
+        $mail->isHTML(true);
         $mail->Subject = $title;
-        $mail->Body = $message;
+        $mail->Body = sprintf('<pre>%s</pre>', $message);
+        $mail->AltBody = $message;
 
         return $mail->send();
     }
