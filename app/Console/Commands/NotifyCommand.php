@@ -8,8 +8,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class NotifyCommand extends Command
 {
-    const CMD_HOST = 'n01.e11.click';
-    const CMD_ADDRESS = '0001-00000001-8B4E';
+    const CMD_HOST = 'n02.e11.click';
+    const CMD_ADDRESS = '0002-00000001-659C';
 
     /**
      * The console command name.
