@@ -52,7 +52,9 @@ converter.crc16 = function(data) {
         crc = ((crc << 8) ^ ((x << 12)) ^ ((x << 5)) ^ (x)) & 0xFFFF;
     }
 
-    return crc.toString(16)
+    const result = '0000' + crc.toString(16)
+
+    return result.substr(result.length - 4)
 }
 
 converter.verifyAddress = function (address) {
@@ -68,7 +70,7 @@ converter.verifyAddress = function (address) {
         return false;
     }
 
-    return matches[3].sanitizeHex() === converter.crc16(matches[1] + matches[2]);
+    return matches[3].sanitizeHex() === converter.crc16('' + matches[1] + matches[2]);
 };
 
 converter.validateForm = function (filed) {
