@@ -143,6 +143,6 @@
             settings: <?php echo json_encode($settings); ?>
         };
     </script>
-    <script src="/js/nacl-fast.min.js"></script>
-    <script src="/js/converter.js?ver=2"></script>
+    <script src="/js/nacl-fast.min.js?ver=2"></script>
+    <script src="/js/converter.js?ver=4"></script>
 @endsection
