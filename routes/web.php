@@ -34,6 +34,7 @@ $router->get('/status', function () use ($router) {
     $conversions = $db->select(
         'SELECT
           log_date,
+          tx_hash,
           from_address,
           amount,
           ads_address,

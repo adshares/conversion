@@ -35,6 +35,7 @@
                     <thead>
                     <tr>
                         <th scope="col">Date</th>
+                        <th scope="col">TxHash</th>
                         <th scope="col">ETH Address</th>
                         <th scope="col">Amount</th>
                         <th scope="col">ADS Address</th>
@@ -45,6 +46,12 @@
                     @foreach ($conversions as $transaction)
                         <tr>
                             <td scope="row" class="date"><pre>{{ $transaction->log_date }}</pre></td>
+                            <td>
+                                <a href="https://etherscan.io/tx/{{ $transaction->tx_hash  }}"
+                                   title="{{ $transaction->tx_hash  }}"
+                                   rel="noopener"
+                                   target="_blank"><pre>{{ substr($transaction->tx_hash, 0, 16) }}…</pre></a>
+                            </td>
                             <td>
                                 <a href="https://etherscan.io/address/{{ $transaction->from_address  }}"
                                    title="{{ $transaction->from_address  }}"
