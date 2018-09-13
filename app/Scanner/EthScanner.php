@@ -6,6 +6,8 @@ use Adshares\Ads\Console\Kernel;
 use Illuminate\Database\DatabaseManager;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use Web3\Providers\HttpProvider;
+use Web3\RequestManagers\HttpRequestManager;
 use Web3\Web3;
 
 class EthScanner implements LoggerAwareInterface
@@ -59,7 +61,9 @@ class EthScanner implements LoggerAwareInterface
      */
     public function __construct(string $url, DatabaseManager $db)
     {
-        $this->web3 = new Web3($url);
+        $this->web3 = new Web3(new HttpProvider(
+            new HttpRequestManager($url, 5)
+        ));
         $this->db = $db;
     }
 
