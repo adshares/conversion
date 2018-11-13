@@ -108,7 +108,7 @@ class NotifyCommand extends Command
             $waitingMessage .= "\n\n";
             $commandMessage = "### Command ###\n\n";
             $commandMessage .= sprintf(
-                '(echo \'{"run":"get_me"}\'%s) | ads --work-dir=. --host=%s --address=%s --secret=',
+                '(echo \'{"run":"get_me"}\'%s) | ads --work-dir=. --host=%s --address=%s --secret',
                 $transfers,
                 self::CMD_HOST,
                 self::CMD_ADDRESS
