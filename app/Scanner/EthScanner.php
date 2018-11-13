@@ -144,38 +144,6 @@ class EthScanner implements LoggerAwareInterface
         );
     }
 
-
-    /**
-     * @param int $retry
-     * @param int $blockNumber
-     * @return string|null
-     */
-    private function createFilter(int $blockNumber, int $retry = 2): ?string
-    {
-        $id = null;
-
-        $this->web3->eth->newFilter([
-            'fromBlock' => '0x' . dechex($blockNumber),
-            'topics' => [$this->transferTopic],
-            'address' => $this->contractAddress
-        ], function ($err, $result) use (&$id) {
-
-            if ($err !== null) {
-                $this->logger->error(sprintf('Creating filter error: %s', $err->getMessage()));
-
-                return;
-            }
-
-            $id = $result;
-        });
-
-        if (null === $id && $retry) {
-            $id = $this->createFilter($blockNumber, --$retry);
-        }
-
-        return $id;
-    }
-
     /**
      * @param int $retry
      * @param int $blockNumber
@@ -185,11 +153,11 @@ class EthScanner implements LoggerAwareInterface
     {
         $logs = null;
 
-        if (null === ($filter = $this->createFilter($blockNumber))) {
-            return [];
-        }
-
-        $this->web3->eth->getFilterLogs($filter, function ($err, $result) use (&$logs) {
+        $this->web3->eth->getLogs([
+            'fromBlock' => '0x' . dechex($blockNumber),
+            'topics' => [$this->transferTopic],
+            'address' => $this->contractAddress
+        ], function ($err, $result) use (&$logs) {
 
             if ($err !== null) {
                 $this->logger->error(sprintf('Fetching logs error: %s', $err->getMessage()));
