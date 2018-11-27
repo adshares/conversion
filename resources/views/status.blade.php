@@ -61,7 +61,7 @@
                             <td class="text-right pr-4"><pre>{{ number_format($transaction->amount) }}</pre></td>
                             <td>
                                 @if ($transaction->status <= 1)
-                                <a href="https://operator.e11.click/blockexplorer/accounts/{{ $transaction->ads_address  }}"
+                                <a href="https://operator.adshares.net/blockexplorer/accounts/{{ $transaction->ads_address  }}"
                                    title="{{ $transaction->ads_address  }}"
                                    rel="noopener"
                                    target="_blank"><pre>{{ $transaction->ads_address }}</pre></a>
@@ -76,7 +76,7 @@
                                        data-placement="left"
                                        title="Conversion in progress…"></i>
                                 @elseif ($transaction->status == 1)
-                                    <a href="https://operator.e11.click/blockexplorer/transactions/{{ $transaction->info  }}"
+                                    <a href="https://operator.adshares.net/blockexplorer/transactions/{{ $transaction->info  }}"
                                        data-toggle="tooltip"
                                        data-placement="left"
                                        title="All right! Transaction id: {{ $transaction->info  }}"
