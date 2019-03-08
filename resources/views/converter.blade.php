@@ -97,6 +97,7 @@
                     </small>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn" id="metamaskButton">Send with METAMASK</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -144,5 +145,5 @@
         };
     </script>
     <script src="/js/nacl-fast.min.js?ver=2"></script>
-    <script src="/js/converter.js?ver=4"></script>
+    <script src="/js/converter.js?ver=5"></script>
 @endsection

@@ -104,6 +104,29 @@
             font-weight: bold;
         }
 
+        #metamaskButton {
+            background-color: #F6851B;
+            color: #FFF;
+            position: relative;
+            border-color: #F6851B;
+            height: 38px;
+            padding-left: 45px;
+            margin-right: 172px;
+        }
+
+        #metamaskButton:before {
+            display: inline-block;
+            background: #FFF url(images/metamask.svg);
+            background-repeat: no-repeat;
+            background-size: auto;
+            content: " ";
+            height: 36px;
+            width: 36px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
     </style>
     @yield('styles')
 </head>

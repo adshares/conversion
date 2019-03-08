@@ -113,6 +113,38 @@ converter.validateForm = function (filed) {
     return valid;
 }
 
+function requestApproval() {
+    tokenInst.approve(
+      addrHOLD,
+      truePlanCost,
+      { gasPrice: web3.toWei('50', 'gwei') },
+      function (error, result) {
+
+          if (!error && result) {
+              var data;
+              console.log('approval sent to network.');
+              var url = 'https://etherscan.io/tx/' + result;
+              var link = '<a href="' +
+              url +
+              '" target="_blank">View Transaction</a>';
+              console.log('waiting for approval ...');
+              data = {
+                  txhash: result,
+                  account_type: selectedPlanId,
+                  txtype: 1, // Approval
+              };
+              apiService(data, '/transaction/create/', 'POST')
+                .done(function (response) {
+                    location.href = response.tx_url;
+                });
+          }
+          else {
+              console.error(error);
+              console.log('You rejected the transaction');
+          }
+      });
+}
+
 $(document).ready(function ($) {
 
     $('.contractAddress').text(converter.settings.contractAddress);
@@ -134,7 +166,26 @@ $(document).ready(function ($) {
             let address = $('#addressInput').val().trim();
 
             $('.tokenAmount').text(amount.formatMoney(0));
-            $('#transactionData').text(converter.generateTransactionData(amount, address));
+            const ethData = converter.generateTransactionData(amount, address);
+            $('#transactionData').text(ethData);
+
+            if (typeof web3 !== 'undefined' && typeof ethereum !== 'undefined') {
+                $('#metamaskButton').click(() => {
+                    ethereum.enable().then(() => {
+                        web3.eth.sendTransaction(
+                          {
+                              to: converter.settings.contractAddress,
+                              from: web3.eth.accounts[0],
+                              value: 0,
+                              gas: 100000,
+                              data: ethData
+                          },
+                          err => console.info(err)
+                        );
+                    });
+                });
+                $('#metamaskButton').show();
+            }
 
             $('#convertModal').modal()
         }
@@ -149,4 +200,6 @@ $(document).ready(function ($) {
     });
 
     $('#generateButton').removeAttr('disabled');
+
+
 });
