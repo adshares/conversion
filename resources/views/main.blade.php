@@ -112,6 +112,7 @@
             height: 38px;
             padding-left: 45px;
             margin-right: 172px;
+            display: none;
         }
 
         #metamaskButton:before {
