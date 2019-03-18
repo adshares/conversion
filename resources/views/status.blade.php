@@ -87,6 +87,11 @@
                                        data-toggle="tooltip"
                                        data-placement="left"
                                        title="A smart contract has been detected. Manual checking is required."></i>
+                                @elseif ($transaction->status == 3)
+                                    <i class="fas fa-question-circle text-warning help"
+                                       data-toggle="tooltip"
+                                       data-placement="left"
+                                       title="{{ $transaction->info }}"></i>
                                 @else
                                    <i class="fas fa-exclamation-triangle text-danger help"
                                       data-toggle="tooltip"
