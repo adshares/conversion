@@ -53,7 +53,7 @@
                                    target="_blank"><pre>{{ substr($transaction->tx_hash, 0, 16) }}…</pre></a>
                             </td>
                             <td>
-                                <a href="https://etherscan.io/address/{{ $transaction->from_address  }}"
+                                <a href="https://etherscan.io/token/0x422866a8f0b032c5cf1dfbdef31a20f4509562b0?a={{ $transaction->from_address  }}"
                                    title="{{ $transaction->from_address  }}"
                                    rel="noopener"
                                    target="_blank"><pre>{{ $transaction->from_address }}</pre></a>
