@@ -34,7 +34,7 @@ $router->get('/status', function () use ($router) {
     $balance = $db->selectOne(
         'SELECT
           treasury_balance
-        FROM scans
+        FROM ads_scans
         ORDER BY created_at DESC');
 
     $totalSupply = (int)env('ADST_TOTAL_SUPPLY') * pow(10, 11);

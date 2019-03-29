@@ -13,7 +13,7 @@ class AddTreasuryBalance extends Migration
      */
     public function up()
     {
-        Schema::table('scans', function($table) {
+        Schema::table('ads_scans', function($table) {
             $table->integer('treasury_balance');
         });
     }
@@ -25,7 +25,7 @@ class AddTreasuryBalance extends Migration
      */
     public function down()
     {
-        Schema::table('scans', function($table) {
+        Schema::table('ads_scans', function($table) {
             $table->dropColumn('treasury_balance');
         });
     }
