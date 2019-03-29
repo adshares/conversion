@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class AddTreasuryBalance extends Migration
@@ -14,7 +13,7 @@ class AddTreasuryBalance extends Migration
     public function up()
     {
         Schema::table('ads_scans', function($table) {
-            $table->integer('treasury_balance');
+            $table->bigInteger('treasury_balance');
         });
     }
 
