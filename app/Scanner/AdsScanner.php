@@ -99,13 +99,20 @@ class AdsScanner implements LoggerAwareInterface
 
     /**
      * @param int $blockNumber
+     * @param int $treasuryBalance
      * @return bool
      */
-    private function saveBlockNumber(int $blockNumber): bool
+    private function logScan(int $blockNumber, int $treasuryBalance): bool
     {
         return $this->db->insert(
-            'INSERT INTO ads_scans ( block_number ) VALUES (?)',
-            [$blockNumber]
+            'INSERT INTO ads_scans (
+               block_number,
+               treasury_balance
+               ) VALUES (?, ?)',
+            [
+                $blockNumber,
+                $treasuryBalance
+            ]
         );
     }
 
@@ -180,7 +187,9 @@ class AdsScanner implements LoggerAwareInterface
             $blockNumber += self::BLOCK_LENGTH;
         }
 
-        if (!$this->saveBlockNumber($blockNumber)) {
+        $account = $this->ads->getAccount($this->treasuryAddress);
+
+        if (!$this->logScan($blockNumber, $account->getAccount()->getBalance())) {
             throw new \RuntimeException('Cannot log scan');
         }
 
@@ -261,4 +270,5 @@ class AdsScanner implements LoggerAwareInterface
 
         return $count;
     }
+
 }

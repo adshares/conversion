@@ -17,6 +17,10 @@
             font-size: 1.25rem;
             margin-bottom: 1rem;
         }
+        .progress {
+            width: 100%;
+            margin: 10px 0;
+        }
     </style>
 @endsection
 @section('content')
@@ -30,6 +34,9 @@
         </div>
         <div class="row">
             <h2 class="text-center mt-4" id="conversion">Token conversion</h2>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: {{ (int)$progress }}%" aria-valuenow="{{ (int)$progress }}" aria-valuemin="0" aria-valuemax="100">{{ number_format($progress, 2) }}%</div>
+            </div>
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
                     <thead>

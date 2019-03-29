@@ -31,6 +31,15 @@ $router->get('/status', function () use ($router) {
 
     $db = app('db');
 
+    $balance = $db->selectOne(
+        'SELECT
+          treasury_balance
+        FROM scans
+        ORDER BY created_at DESC');
+
+    $totalSupply = (int)env('ADST_TOTAL_SUPPLY') * pow(10, 11);
+    $progress = 100 * (1 - ($balance->treasury_balance / $totalSupply));
+
     $conversions = $db->select(
         'SELECT
           log_date,
@@ -53,6 +62,7 @@ $router->get('/status', function () use ($router) {
         ORDER BY log_date DESC');
 
     return view('status', [
+        'progress' => $progress,
         'conversions' => $conversions,
         'transactions' => $transactions
     ]);
