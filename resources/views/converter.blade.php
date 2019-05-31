@@ -6,6 +6,28 @@
         <div class="row">
             <div class="col">
                 <h1 class="text-center mt-4">@yield('title')</h1>
+                <div class="alert alert-danger mt-4" role="alert">
+                    <p>
+                        Please, remember that ADST -> ADS conversion ends on the <b>30th of June 2019</b>. After this date, it
+                        will not be possible to convert ADST into ADS anymore.
+                    </p>
+                    <p>
+                        The token swap will be done at a <b>1:1 ratio</b>. This means that one ADST ERC-20 token will be
+                        exchanged for one ADS coin. There will be no cost for the swap except the Ethereum Gas cost for
+                        the transaction.
+                    </p>
+                    <p>
+                        Please keep in mind that once the process is over, it will not be possible to convert your ADS
+                        coins back to ADST ERC-20 tokens. After the 30th of June 2019, the ADST ERC-20 token will not be
+                        usable and will not be supported by Adshares. Please make sure to swap your tokens before the
+                        deadline.
+                    </p>
+                    <p class="mb-0">
+                        Also, keep in mind that, depending on the number of conversions, the later you will start the
+                        conversion process, the longer it may take, so we advise to start the procedure before the 20th
+                        of June, 2019.
+                    </p>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -44,7 +66,8 @@
                                     </a>
                                 </div>
                             </div>
-                            <input class="form-control" id="addressInput" placeholder="Enter the ADS account address" required />
+                            <input class="form-control" id="addressInput" placeholder="Enter the ADS account address"
+                                   required/>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
@@ -85,12 +108,13 @@
                         <code class="contractAddress">---</code>
                     </div>
 
-                    Set transaction data (yours <code><span class="tokenAmount">20,000</span> ADST</code> and the account address are encoded in this data):
+                    Set transaction data (yours <code><span class="tokenAmount">20,000</span> ADST</code> and the
+                    account address are encoded in this data):
                     <div class="border border-secondary p-1 my-3">
                         <code id="transactionData">---</code>
                     </div>
 
-                    We recommend setting the gas limit to <code>100,000</code>.<br />
+                    We recommend setting the gas limit to <code>100,000</code>.<br/>
 
                     <small>
                         You can check your conversion status on <a href="/status">this page</a>.
@@ -112,7 +136,8 @@
                         <h4 class="alert-heading text-center">Account address verification faild</h4>
                         <hr>
                         <p>
-                            CRC checksum of an account address <span class="badge badge-secondary">ADS</span> doesn't valid.
+                            CRC checksum of an account address <span class="badge badge-secondary">ADS</span> doesn't
+                            valid.
                             Make sure you enter the correct address.
                         </p>
                         <p>
@@ -140,9 +165,9 @@
 
 @section('scripts')
     <script>
-        const converter = {
-            settings: <?php echo json_encode($settings); ?>
-        };
+      const converter = {
+        settings: <?php echo json_encode($settings); ?>
+      }
     </script>
     <script src="/js/nacl-fast.min.js?ver=2"></script>
     <script src="/js/converter.js?ver=5"></script>
