@@ -182,11 +182,6 @@
                         </a>
                     </div>
                     <div class="m-2">
-                        <a id="menu_down_social_facebook" href="https://www.facebook.com/adshares/" target="_blank" rel="noopener">
-                            <img src="images/facebook.svg" alt="Facebook icon">
-                        </a>
-                    </div>
-                    <div class="m-2">
                         <a id="menu_down_social_github" href="https://github.com/adshares" target="_blank" rel="noopener">
                             <img src="images/github.svg" alt="Github icon">
                         </a>
